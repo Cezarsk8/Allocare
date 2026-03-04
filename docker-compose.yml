@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: allocare-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: t4P5X0Ae9
+      POSTGRES_DB: Allocare
+    ports:
+      - "5437:5432"
+    volumes:
+      - allocare_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  allocare_data:

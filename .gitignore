@@ -1,0 +1,16 @@
+# Sub-projects have their own git repos
+Allocore-backend/
+Allocore-frontend/
+
+# Credentials and sensitive files
+credentials.md
+test-credentials.json
+appsettings.Development.json
+.env
+
+# Database backups
+*.backup
+backups/
+
+# Claude session files
+.claude/projects/

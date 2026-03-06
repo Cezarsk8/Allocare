@@ -14,13 +14,13 @@
 | US001 | Backend Scaffolding | Infrastructure |
 | US002 | JWT Authentication | Authentication |
 | US003 | Company & Multi-Tenant | Multi-Tenant |
+| US004 | Provider Management | Providers |
 | USFW001 | Frontend Project Scaffolding | Frontend / Infrastructure |
 | USFW002 | Company Management Frontend | Frontend / Multi-Tenant |
 
 ### In Progress / Pending
 | Story | Title | Domain | Dependencies | Status |
 |-------|-------|--------|-------------|--------|
-| US004 | Provider Management | Providers | US003 | Pending |
 | US005 | Provider Contracts | Contracts | US004 | Pending |
 | US006 | Notes System | Notes | US004, US005 | Pending |
 | US007 | Asset & Inventory Management | Inventory | US003, US011 | Pending |
@@ -36,11 +36,11 @@
 |-------|-------|--------|--------|
 | US003 | Company & Multi-Tenant Core | Medium | ✅ Done |
 
-### Tier 2 — Provider Management
-| Story | Title | Effort |
-|-------|-------|--------|
-| US004 | Provider Management | Medium |
-| US005 | Provider Contracts | Large |
+### ~~Tier 2 — Provider Management~~ (partially completed)
+| Story | Title | Effort | Status |
+|-------|-------|--------|--------|
+| US004 | Provider Management | Medium | ✅ Done |
+| US005 | Provider Contracts | Large | Pending |
 
 > **PM Commentary**: Providers and contracts are the core domain of Allocare. This tier delivers the primary value proposition — centralizing provider data.
 
@@ -90,7 +90,7 @@ BACKEND:
 US001 (Scaffolding) ✅
   └── US002 (JWT Auth) ✅
        └── US003 (Multi-Tenant) ✅
-            ├── US004 (Providers)
+            ├── US004 (Providers) ✅
             │    ├── US005 (Contracts)
             │    │    └── US006 (Notes) ← also depends on US004
             │    ├── US006 (Notes)

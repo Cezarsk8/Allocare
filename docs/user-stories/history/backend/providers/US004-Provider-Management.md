@@ -17,7 +17,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 1.1 Create ProviderCategory enum
 
-- [ ] Create `Allocore.Domain/Entities/Providers/ProviderCategory.cs`:
+- [x] ✅ DONE Create `Allocore.Domain/Entities/Providers/ProviderCategory.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Providers;
 
@@ -38,7 +38,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 1.2 Create Provider entity
 
-- [ ] Create `Allocore.Domain/Entities/Providers/Provider.cs`:
+- [x] ✅ DONE Create `Allocore.Domain/Entities/Providers/Provider.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Providers;
 
@@ -131,7 +131,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 1.3 Create ProviderContact entity
 
-- [ ] Create `Allocore.Domain/Entities/Providers/ProviderContact.cs`:
+- [x] ✅ DONE Create `Allocore.Domain/Entities/Providers/ProviderContact.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Providers;
 
@@ -192,7 +192,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 2.1 Provider configuration
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/ProviderConfiguration.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Configurations/ProviderConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
 
@@ -256,7 +256,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 2.2 ProviderContact configuration
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/ProviderContactConfiguration.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Configurations/ProviderContactConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
 
@@ -304,7 +304,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 2.3 Update ApplicationDbContext
 
-- [ ] Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs` — add DbSets:
+- [x] ✅ DONE Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs` — add DbSets:
   ```csharp
   // Add these using statements
   using Allocore.Domain.Entities.Providers;
@@ -317,7 +317,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 2.4 Create migration
 
-- [ ] Run migration:
+- [x] ✅ DONE Run migration:
   ```bash
   dotnet ef migrations add AddProviders -s Allocore.API -p Allocore.Infrastructure
   ```
@@ -329,7 +329,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 3.1 Create IProviderRepository interface
 
-- [ ] Create `Allocore.Application/Abstractions/Persistence/IProviderRepository.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Abstractions/Persistence/IProviderRepository.cs`:
   ```csharp
   namespace Allocore.Application.Abstractions.Persistence;
 
@@ -355,7 +355,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 3.2 Create ProviderRepository implementation
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Repositories/ProviderRepository.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Repositories/ProviderRepository.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Repositories;
 
@@ -458,7 +458,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 3.3 Register in DI
 
-- [ ] Update `Allocore.Infrastructure/DependencyInjection.cs`:
+- [x] ✅ DONE Update `Allocore.Infrastructure/DependencyInjection.cs`:
   ```csharp
   // Add registration
   services.AddScoped<IProviderRepository, ProviderRepository>();
@@ -470,7 +470,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 4.1 Create Provider DTOs
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/ProviderDto.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/ProviderDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -490,7 +490,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/ProviderContactDto.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/ProviderContactDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -504,7 +504,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/ProviderListItemDto.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/ProviderListItemDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -520,7 +520,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   ```
   - **Note**: Lightweight DTO for list views. Avoids sending full contact details in paginated lists.
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/CreateProviderRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/CreateProviderRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -535,7 +535,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/CreateProviderContactRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/CreateProviderContactRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -548,7 +548,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/UpdateProviderRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/UpdateProviderRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -562,7 +562,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/AddProviderContactRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/AddProviderContactRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -575,7 +575,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/DTOs/UpdateProviderContactRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/DTOs/UpdateProviderContactRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.DTOs;
 
@@ -594,7 +594,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 5.1 Create validators
 
-- [ ] Create `Allocore.Application/Features/Providers/Validators/CreateProviderRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Validators/CreateProviderRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Validators;
 
@@ -643,7 +643,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   }
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Validators/CreateProviderContactRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Validators/CreateProviderContactRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Validators;
 
@@ -674,13 +674,13 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   }
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Validators/UpdateProviderRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Validators/UpdateProviderRequestValidator.cs`:
   - Same rules as `CreateProviderRequestValidator` but without the `Contacts` collection rules.
 
-- [ ] Create `Allocore.Application/Features/Providers/Validators/AddProviderContactRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Validators/AddProviderContactRequestValidator.cs`:
   - Same rules as `CreateProviderContactRequestValidator`.
 
-- [ ] Create `Allocore.Application/Features/Providers/Validators/UpdateProviderContactRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Validators/UpdateProviderContactRequestValidator.cs`:
   - Same rules as `CreateProviderContactRequestValidator`.
 
 ---
@@ -689,7 +689,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 6.1 CreateProvider command
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/CreateProviderCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/CreateProviderCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -700,7 +700,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record CreateProviderCommand(Guid CompanyId, CreateProviderRequest Request) : IRequest<Result<ProviderDto>>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/CreateProviderCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/CreateProviderCommandHandler.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -803,7 +803,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 6.2 UpdateProvider command
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/UpdateProviderCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/UpdateProviderCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -814,7 +814,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record UpdateProviderCommand(Guid CompanyId, Guid ProviderId, UpdateProviderRequest Request) : IRequest<Result<ProviderDto>>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/UpdateProviderCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/UpdateProviderCommandHandler.cs`:
   - Verify user has access to company
   - Load provider by ID, verify it belongs to the company (`provider.CompanyId == command.CompanyId`)
   - Check for duplicate name within company (excluding current provider via `ExistsByNameInCompanyExcludingAsync`)
@@ -824,7 +824,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 6.3 DeactivateProvider command
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/DeactivateProviderCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/DeactivateProviderCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -834,7 +834,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record DeactivateProviderCommand(Guid CompanyId, Guid ProviderId) : IRequest<Result>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/DeactivateProviderCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/DeactivateProviderCommandHandler.cs`:
   - Verify user access to company
   - Load provider, verify it belongs to company
   - Call `provider.Deactivate()`, save changes
@@ -842,7 +842,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 6.4 AddProviderContact command
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/AddProviderContactCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/AddProviderContactCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -853,7 +853,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record AddProviderContactCommand(Guid CompanyId, Guid ProviderId, AddProviderContactRequest Request) : IRequest<Result<ProviderContactDto>>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/AddProviderContactCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/AddProviderContactCommandHandler.cs`:
   - Verify user access to company
   - Load provider with contacts (`GetByIdWithContactsAsync`), verify it belongs to company
   - If `IsPrimary = true`, unset any existing primary contact on this provider
@@ -862,7 +862,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 6.5 UpdateProviderContact command
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/UpdateProviderContactCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/UpdateProviderContactCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -873,11 +873,11 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record UpdateProviderContactCommand(Guid CompanyId, Guid ProviderId, Guid ContactId, UpdateProviderContactRequest Request) : IRequest<Result<ProviderContactDto>>;
   ```
 
-- [ ] Create handler — same pattern: verify access, load provider with contacts, find contact, update, handle primary flag, save.
+- [x] ✅ DONE Create handler — same pattern: verify access, load provider with contacts, find contact, update, handle primary flag, save.
 
 ### 6.6 RemoveProviderContact command
 
-- [ ] Create `Allocore.Application/Features/Providers/Commands/RemoveProviderContactCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Commands/RemoveProviderContactCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Commands;
 
@@ -887,7 +887,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record RemoveProviderContactCommand(Guid CompanyId, Guid ProviderId, Guid ContactId) : IRequest<Result>;
   ```
 
-- [ ] Create handler — verify access, load provider with contacts, find contact, remove, save.
+- [x] ✅ DONE Create handler — verify access, load provider with contacts, find contact, remove, save.
 
 ---
 
@@ -895,7 +895,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ### 7.1 GetProviderById query
 
-- [ ] Create `Allocore.Application/Features/Providers/Queries/GetProviderByIdQuery.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Queries/GetProviderByIdQuery.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Queries;
 
@@ -906,14 +906,14 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   public record GetProviderByIdQuery(Guid CompanyId, Guid ProviderId) : IRequest<Result<ProviderDto>>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Queries/GetProviderByIdQueryHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Queries/GetProviderByIdQueryHandler.cs`:
   - Verify user access to company
   - Load provider with contacts, verify it belongs to company
   - Return `ProviderDto`
 
 ### 7.2 GetProvidersPaged query
 
-- [ ] Create `Allocore.Application/Features/Providers/Queries/GetProvidersPagedQuery.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Queries/GetProvidersPagedQuery.cs`:
   ```csharp
   namespace Allocore.Application.Features.Providers.Queries;
 
@@ -931,7 +931,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   ```
   - **Note**: `PagedResult<T>` — if this doesn't exist yet, create it as a generic wrapper:
 
-- [ ] Create `Allocore.Application/Common/PagedResult.cs` (if not already present):
+- [x] ✅ DONE Create `Allocore.Application/Common/PagedResult.cs`:
   ```csharp
   namespace Allocore.Application.Common;
 
@@ -948,7 +948,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
   }
   ```
 
-- [ ] Create `Allocore.Application/Features/Providers/Queries/GetProvidersPagedQueryHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Providers/Queries/GetProvidersPagedQueryHandler.cs`:
   - Verify user access to company
   - Parse category filter if provided
   - Call `_providerRepository.GetPagedByCompanyAsync(...)` with filters
@@ -959,7 +959,7 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ## Step 8: API Layer — ProvidersController
 
-- [ ] Create `Allocore.API/Controllers/v1/ProvidersController.cs`:
+- [x] ✅ DONE Create `Allocore.API/Controllers/v1/ProvidersController.cs`:
   ```csharp
   namespace Allocore.API.Controllers.v1;
 
@@ -1115,8 +1115,8 @@ Currently, Allocore has no concept of a Provider. This story introduces the Prov
 
 ## Step 9: Build, Verify & Manual Test
 
-- [ ] Run `dotnet build` — ensure entire solution compiles
-- [ ] Apply migration: `dotnet ef database update -s Allocore.API -p Allocore.Infrastructure`
+- [x] ✅ DONE Run `dotnet build` — ensure entire solution compiles
+- [x] ✅ DONE Apply migration: `dotnet ef database update -s Allocore.API -p Allocore.Infrastructure`
 - [ ] Run application and verify Swagger shows all new endpoints
 - [ ] Manual test via Swagger:
   1. Create a provider with contacts → 201

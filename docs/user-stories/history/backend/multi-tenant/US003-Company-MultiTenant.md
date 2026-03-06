@@ -10,8 +10,8 @@
 
 ## Step 1: Domain Layer – Company & UserCompany Entities
 
-- [ ] Create `Allocore.Domain/Companies/` folder
-- [ ] Create `Allocore.Domain/Companies/Company.cs`:
+- [x] ✅ DONE Create `Allocore.Domain/Companies/` folder
+- [x] ✅ DONE Create `Allocore.Domain/Companies/Company.cs`:
   ```csharp
   namespace Allocore.Domain.Companies;
   
@@ -61,7 +61,7 @@
       }
   }
   ```
-- [ ] Create `Allocore.Domain/Companies/RoleInCompany.cs`:
+- [x] ✅ DONE Create `Allocore.Domain/Companies/RoleInCompany.cs`:
   ```csharp
   namespace Allocore.Domain.Companies;
   
@@ -72,7 +72,7 @@
       Owner = 2
   }
   ```
-- [ ] Create `Allocore.Domain/Companies/UserCompany.cs`:
+- [x] ✅ DONE Create `Allocore.Domain/Companies/UserCompany.cs`:
   ```csharp
   namespace Allocore.Domain.Companies;
   
@@ -108,7 +108,7 @@
       }
   }
   ```
-- [ ] Update `Allocore.Domain/Users/User.cs` to add navigation property:
+- [x] ✅ DONE Update `Allocore.Domain/Users/User.cs` to add navigation property:
   ```csharp
   // Add to User class
   private readonly List<UserCompany> _userCompanies = new();
@@ -119,7 +119,7 @@
 
 ## Step 2: Application Layer – Abstractions & Interfaces
 
-- [ ] Create `Allocore.Application/Abstractions/Persistence/ICompanyRepository.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Abstractions/Persistence/ICompanyRepository.cs`:
   ```csharp
   namespace Allocore.Application.Abstractions.Persistence;
   
@@ -132,7 +132,7 @@
       Task<(IEnumerable<Company> Companies, int TotalCount)> GetPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default);
   }
   ```
-- [ ] Create `Allocore.Application/Abstractions/Persistence/IUserCompanyRepository.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Abstractions/Persistence/IUserCompanyRepository.cs`:
   ```csharp
   namespace Allocore.Application.Abstractions.Persistence;
   
@@ -152,7 +152,7 @@
 
 ## Step 3: Application Layer – DTOs
 
-- [ ] Create `Allocore.Application/Features/Companies/DTOs/CompanyDto.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/DTOs/CompanyDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.DTOs;
   
@@ -166,7 +166,7 @@
       string? UserRole  // Role of current user in this company (when applicable)
   );
   ```
-- [ ] Create `Allocore.Application/Features/Companies/DTOs/CreateCompanyRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/DTOs/CreateCompanyRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.DTOs;
   
@@ -176,7 +176,7 @@
       string? TaxId
   );
   ```
-- [ ] Create `Allocore.Application/Features/Companies/DTOs/UpdateCompanyRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/DTOs/UpdateCompanyRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.DTOs;
   
@@ -186,7 +186,7 @@
       string? TaxId
   );
   ```
-- [ ] Create `Allocore.Application/Features/Companies/DTOs/AddUserToCompanyRequest.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/DTOs/AddUserToCompanyRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.DTOs;
   
@@ -195,7 +195,7 @@
       string RoleInCompany  // "Viewer", "Manager", "Owner"
   );
   ```
-- [ ] Create `Allocore.Application/Features/Companies/DTOs/UserCompanyDto.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/DTOs/UserCompanyDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.DTOs;
   
@@ -214,7 +214,7 @@
 
 ## Step 4: Application Layer – Validators
 
-- [ ] Create `Allocore.Application/Features/Companies/Validators/CreateCompanyRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Validators/CreateCompanyRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Validators;
   
@@ -239,8 +239,8 @@
       }
   }
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Validators/UpdateCompanyRequestValidator.cs`
-- [ ] Create `Allocore.Application/Features/Companies/Validators/AddUserToCompanyRequestValidator.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Validators/UpdateCompanyRequestValidator.cs`
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Validators/AddUserToCompanyRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Validators;
   
@@ -266,7 +266,7 @@
 
 ## Step 5: Application Layer – CQRS Commands & Queries
 
-- [ ] Create `Allocore.Application/Features/Companies/Commands/CreateCompanyCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/CreateCompanyCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Commands;
   
@@ -276,7 +276,7 @@
   
   public record CreateCompanyCommand(CreateCompanyRequest Request) : IRequest<Result<CompanyDto>>;
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Commands/CreateCompanyCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/CreateCompanyCommandHandler.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Commands;
   
@@ -339,8 +339,8 @@
       }
   }
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Commands/UpdateCompanyCommand.cs` and handler
-- [ ] Create `Allocore.Application/Features/Companies/Commands/AddUserToCompanyCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/UpdateCompanyCommand.cs` and handler
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/AddUserToCompanyCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Commands;
   
@@ -350,7 +350,7 @@
   
   public record AddUserToCompanyCommand(Guid CompanyId, AddUserToCompanyRequest Request) : IRequest<Result<UserCompanyDto>>;
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Commands/AddUserToCompanyCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/AddUserToCompanyCommandHandler.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Commands;
   
@@ -431,7 +431,7 @@
       }
   }
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Commands/RemoveUserFromCompanyCommand.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/RemoveUserFromCompanyCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Commands;
   
@@ -440,11 +440,11 @@
   
   public record RemoveUserFromCompanyCommand(Guid CompanyId, Guid UserId) : IRequest<Result>;
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Commands/RemoveUserFromCompanyCommandHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Commands/RemoveUserFromCompanyCommandHandler.cs`:
   - Verify permissions (Owner or Admin)
   - Prevent removing the last Owner
   - Delete UserCompany record
-- [ ] Create `Allocore.Application/Features/Companies/Queries/GetMyCompaniesQuery.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Queries/GetMyCompaniesQuery.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Queries;
   
@@ -453,7 +453,7 @@
   
   public record GetMyCompaniesQuery : IRequest<IEnumerable<CompanyDto>>;
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Queries/GetMyCompaniesQueryHandler.cs`:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Queries/GetMyCompaniesQueryHandler.cs`:
   ```csharp
   namespace Allocore.Application.Features.Companies.Queries;
   
@@ -496,15 +496,15 @@
       }
   }
   ```
-- [ ] Create `Allocore.Application/Features/Companies/Queries/GetCompanyByIdQuery.cs` and handler
-- [ ] Create `Allocore.Application/Features/Companies/Queries/GetCompanyUsersQuery.cs` and handler:
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Queries/GetCompanyByIdQuery.cs` and handler
+- [x] ✅ DONE Create `Allocore.Application/Features/Companies/Queries/GetCompanyUsersQuery.cs` and handler:
   - Returns all users linked to a company with their roles
 
 ---
 
 ## Step 6: Infrastructure Layer – Database Configuration
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/CompanyConfiguration.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Configurations/CompanyConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
   
@@ -543,7 +543,7 @@
       }
   }
   ```
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/UserCompanyConfiguration.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Configurations/UserCompanyConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
   
@@ -582,7 +582,7 @@
       }
   }
   ```
-- [ ] Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs`:
+- [x] ✅ DONE Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs`:
   ```csharp
   // Add DbSets
   public DbSet<Company> Companies => Set<Company>();
@@ -593,7 +593,7 @@
 
 ## Step 7: Infrastructure Layer – Repository Implementations
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Repositories/CompanyRepository.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Repositories/CompanyRepository.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Repositories;
   
@@ -652,7 +652,7 @@
       }
   }
   ```
-- [ ] Create `Allocore.Infrastructure/Persistence/Repositories/UserCompanyRepository.cs`:
+- [x] ✅ DONE Create `Allocore.Infrastructure/Persistence/Repositories/UserCompanyRepository.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Repositories;
   
@@ -726,7 +726,7 @@
 
 ## Step 8: Infrastructure Layer – Dependency Injection Update
 
-- [ ] Update `Allocore.Infrastructure/DependencyInjection.cs`:
+- [x] ✅ DONE Update `Allocore.Infrastructure/DependencyInjection.cs`:
   ```csharp
   // Add repository registrations
   services.AddScoped<ICompanyRepository, CompanyRepository>();
@@ -737,7 +737,7 @@
 
 ## Step 9: Infrastructure Layer – Database Seeding Update
 
-- [ ] Update `Allocore.Infrastructure/Persistence/Seeding/DatabaseSeeder.cs`:
+- [x] ✅ DONE Update `Allocore.Infrastructure/Persistence/Seeding/DatabaseSeeder.cs`:
   ```csharp
   // After creating admin user, create test company
   if (!await context.Companies.AnyAsync())
@@ -764,7 +764,7 @@
 
 ## Step 10: API Layer – Controllers
 
-- [ ] Create `Allocore.API/Controllers/v1/CompaniesController.cs`:
+- [x] ✅ DONE Create `Allocore.API/Controllers/v1/CompaniesController.cs`:
   ```csharp
   namespace Allocore.API.Controllers.v1;
   
@@ -861,7 +861,7 @@
       }
   }
   ```
-- [ ] Create `Allocore.API/Controllers/v1/MyController.cs` (for user-scoped endpoints):
+- [x] ✅ DONE Create `Allocore.API/Controllers/v1/MyController.cs` (for user-scoped endpoints):
   ```csharp
   namespace Allocore.API.Controllers.v1;
   
@@ -900,11 +900,11 @@
 
 ## Step 11: Migrations
 
-- [ ] Create migration for Companies:
+- [x] ✅ DONE Create migration for Companies:
   ```bash
   dotnet ef migrations add AddCompanies -s Allocore.API -p Allocore.Infrastructure
   ```
-- [ ] Apply migration:
+- [x] ✅ DONE Apply migration:
   ```bash
   dotnet ef database update -s Allocore.API -p Allocore.Infrastructure
   ```
@@ -913,9 +913,9 @@
 
 ## Step 12: Documentation Updates
 
-- [ ] Update `Docs/Architecture.md` with multi-tenant layer details
-- [ ] Update `Docs/DevelopmentHistory.md` with v0.3 – Companies implementation
-- [ ] Update `Docs/UserStories.md` with US003 reference
+- [x] ✅ DONE Update `Docs/Architecture.md` with multi-tenant layer details
+- [x] ✅ DONE Update `Docs/DevelopmentHistory.md` with v0.3 – Companies implementation
+- [x] ✅ DONE Update `Docs/UserStories.md` with US003 reference
 
 ---
 
@@ -1106,15 +1106,15 @@ Allocore.API/
 
 ## Acceptance Criteria
 
-- [ ] Authenticated users can list companies they are associated with via `GET /api/v1/my/companies`
-- [ ] Admin (seeded) can create companies via `POST /api/v1/companies`
-- [ ] Admin/Owner can add users to companies via `POST /api/v1/companies/{id}/users`
-- [ ] Admin/Owner can remove users from companies via `DELETE /api/v1/companies/{id}/users/{userId}`
-- [ ] All company queries are filtered by UserId or require appropriate role
-- [ ] Migrations created and applied (`AddCompanies`)
-- [ ] Seed data includes test company linked to admin user
-- [ ] `dotnet build` passes without errors
-- [ ] Swagger displays all new endpoints with proper documentation
+- [x] ✅ DONE Authenticated users can list companies they are associated with via `GET /api/v1/my/companies`
+- [x] ✅ DONE Admin (seeded) can create companies via `POST /api/v1/companies`
+- [x] ✅ DONE Admin/Owner can add users to companies via `POST /api/v1/companies/{id}/users`
+- [x] ✅ DONE Admin/Owner can remove users from companies via `DELETE /api/v1/companies/{id}/users/{userId}`
+- [x] ✅ DONE All company queries are filtered by UserId or require appropriate role
+- [x] ✅ DONE Migrations created and applied (`AddCompanies`)
+- [x] ✅ DONE Seed data includes test company linked to admin user
+- [x] ✅ DONE `dotnet build` passes without errors
+- [x] ✅ DONE Swagger displays all new endpoints with proper documentation
 
 ---
 

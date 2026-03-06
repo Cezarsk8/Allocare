@@ -28,13 +28,13 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 0: Responsive Baseline (MANDATORY)
 
-- [ ] All forms: single column on mobile, wider on desktop
-- [ ] Company users table: horizontal scroll on mobile
-- [ ] Action buttons: full width on mobile, inline on desktop
+- [x] ✅ DONE All forms: single column on mobile, wider on desktop
+- [x] ✅ DONE Company users table: horizontal scroll on mobile
+- [x] ✅ DONE Action buttons: full width on mobile, inline on desktop
 
 ## Step 1: Types
 
-- [ ] Create `src/types/company.ts`:
+- [x] ✅ DONE Create `src/types/company.ts`:
   ```typescript
   export interface CompanyDto {
     id: string;
@@ -76,7 +76,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 2: API Service & Client
 
-- [ ] Create `src/app/services/apiClient.ts`:
+- [x] ✅ DONE Create `src/app/services/apiClient.ts`:
   ```typescript
   import axios from 'axios';
 
@@ -99,7 +99,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
   export default apiClient;
   ```
 
-- [ ] Create `src/app/services/companyService.ts`:
+- [x] ✅ DONE Create `src/app/services/companyService.ts`:
   ```typescript
   import apiClient from './apiClient';
   import type { CompanyDto, CreateCompanyRequest, UpdateCompanyRequest, AddUserToCompanyRequest, UserCompanyDto } from '@/types/company';
@@ -130,7 +130,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 3: Hooks
 
-- [ ] Create `src/app/hooks/useCompanies.ts`:
+- [x] ✅ DONE Create `src/app/hooks/useCompanies.ts`:
   ```typescript
   import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
   import { companyService } from '@/app/services/companyService';
@@ -202,7 +202,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 4: Zod Schemas
 
-- [ ] Create `src/app/constants/companySchemas.ts`:
+- [x] ✅ DONE Create `src/app/constants/companySchemas.ts`:
   ```typescript
   import { z } from 'zod/v4';
 
@@ -226,7 +226,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 5: Page — My Companies
 
-- [ ] Create `src/app/(protected)/companies/page.tsx`:
+- [x] ✅ DONE Create `src/app/(protected)/companies/page.tsx`:
   - List current user's companies using `useMyCompanies()`
   - Show company name, role, status
   - "Nova Empresa" button (for Admin users)
@@ -237,7 +237,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 6: Page — Company Detail
 
-- [ ] Create `src/app/(protected)/companies/[id]/page.tsx`:
+- [x] ✅ DONE Create `src/app/(protected)/companies/[id]/page.tsx`:
   - Show company details (name, legal name, tax ID, status)
   - Edit button (Owner/Admin)
   - Tab/section: Company Users list
@@ -247,7 +247,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 7: Company Form Component
 
-- [ ] Create `src/app/components/companies/CompanyForm.tsx`:
+- [x] ✅ DONE Create `src/app/components/companies/CompanyForm.tsx`:
   - React Hook Form + Zod validation
   - Fields: name (required), legalName (optional), taxId (optional)
   - Mode: create or edit (pre-filled)
@@ -257,7 +257,7 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 8: Add User to Company Component
 
-- [ ] Create `src/app/components/companies/AddUserToCompanyForm.tsx`:
+- [x] ✅ DONE Create `src/app/components/companies/AddUserToCompanyForm.tsx`:
   - Fields: userId (text input), roleInCompany (select: Viewer/Manager/Owner)
   - Zod validation
   - Submit calls `useAddUserToCompany()`
@@ -265,8 +265,8 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Step 9: Barrel Exports & Cleanup
 
-- [ ] Update barrel exports as needed
-- [ ] Verify all imports use `@/*` alias
+- [x] ✅ DONE Update barrel exports as needed
+- [x] ✅ DONE Verify all imports use `@/*` alias
 
 ---
 
@@ -302,15 +302,15 @@ As an **authenticated user**, I want to see which companies I belong to via a "M
 
 ## Acceptance Criteria
 
-- [ ] My Companies page lists the current user's companies
-- [ ] Admin can create a company via form with validation
-- [ ] Owner/Admin can edit a company
-- [ ] Company detail page shows company info and linked users
-- [ ] Owner/Admin can add users to a company
-- [ ] Owner/Admin can remove users from a company
-- [ ] Toast notifications for all success/error operations
-- [ ] `npm run type-check` passes
-- [ ] `npm run build` passes
+- [x] ✅ DONE My Companies page lists the current user's companies
+- [x] ✅ DONE Admin can create a company via form with validation
+- [x] ✅ DONE Owner/Admin can edit a company
+- [x] ✅ DONE Company detail page shows company info and linked users
+- [x] ✅ DONE Owner/Admin can add users to a company
+- [x] ✅ DONE Owner/Admin can remove users from a company
+- [x] ✅ DONE Toast notifications for all success/error operations
+- [x] ✅ DONE `npm run type-check` passes
+- [x] ✅ DONE `npm run build` passes
 
 ---
 

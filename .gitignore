@@ -1,16 +1,31 @@
-# Sub-projects have their own git repos
-Allocore-backend/
-Allocore-frontend/
-
-# Credentials and sensitive files
+# Secrets
 credentials.md
 test-credentials.json
 appsettings.Development.json
 .env
+.env*.local
 
-# Database backups
+# Backups
 *.backup
 backups/
 
-# Claude session files
+# Claude
 .claude/projects/
+
+# .NET
+**/[Bb]in/
+**/[Oo]bj/
+**/.vs/
+*.user
+*.suo
+
+# Node / Next.js
+**/node_modules/
+**/.next/
+**/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,143 @@
+# Allocore Development History
+
+## Version History
+
+### v0.1 – Backend Scaffolding (US001)
+
+**Date**: 2024-12-02 15:43 UTC-03:00
+
+**Summary**: Implemented complete backend scaffolding for Allocore platform following Clean Architecture + CQRS patterns.
+
+**Changes**:
+- Created .NET 8 solution with 4 projects: API, Application, Domain, Infrastructure
+- Configured project references following Clean Architecture dependency rules
+- Installed NuGet packages: MediatR 13.x, FluentValidation 12.x, EF Core 8.x, Swashbuckle, Asp.Versioning
+- Domain Layer: Created `Entity` base class, `Result` pattern, placeholder `User`/`Role` entities
+- Application Layer: Added `IReadRepository`/`IWriteRepository` abstractions, `ValidationBehavior` pipeline, Ping feature (Query + Handler)
+- Infrastructure Layer: Created `InMemoryRepository` implementation, DI setup
+- API Layer: `PingController` with versioning, `Program.cs` with Swagger, CORS, health checks, global exception handling
+- Documentation: Created `Architecture.md`, `DevelopmentHistory.md`, `UserStories.md`
+- Verified all endpoints: `/`, `/swagger`, `/health`, `/api/v1/ping`
+
+**Endpoints**:
+- `GET /` → Swagger redirect
+- `GET /swagger` → API documentation  
+- `GET /health` → Health check
+- `GET /api/v1/ping` → Returns `{ "message": "pong", "timestamp": "..." }`
+
+---
+
+### v0.2 – JWT Authentication (US002)
+
+**Date**: 2025 (implemented)
+
+**Summary**: Full JWT authentication system with registration, login, refresh tokens, and role-based authorization.
+
+**Changes**:
+- User entity with email, password hash (BCrypt), roles, lockout fields
+- RefreshToken entity for token rotation
+- Login/Register/Refresh/Logout/ForgotPassword/ResetPassword commands
+- JWT access tokens + refresh tokens with configurable expiration
+- Rate limiting on auth endpoints
+- User management CRUD (Admin only for listing/deletion)
+- CurrentUser service for authenticated context
+- LocaleTag value object for i18n
+
+**Endpoints**:
+- `POST /api/v1/auth/register` → Register new user
+- `POST /api/v1/auth/login` → Login with email/password
+- `POST /api/v1/auth/refresh` → Refresh access token
+- `POST /api/v1/auth/logout` → Revoke refresh token
+- `POST /api/v1/auth/forgot-password` → Request password reset
+- `POST /api/v1/auth/reset-password` → Reset password with token
+- `GET /api/v1/users/me` → Current user profile
+- `GET /api/v1/users` → List users (Admin)
+- `GET /api/v1/users/{id}` → Get user by ID (Admin)
+- `PUT /api/v1/users/{id}` → Update user profile
+- `DELETE /api/v1/users/{id}` → Deactivate user (Admin)
+
+---
+
+### v0.3 – Multi-Tenant Core (US003)
+
+**Date**: 2026-03-05
+
+**Summary**: Implemented Company management and User-Company mapping as the multi-tenant foundation for Allocore. All future business entities will be company-scoped.
+
+**Changes**:
+- Domain: `Company` entity (Name, LegalName, TaxId, IsActive), `UserCompany` join entity, `RoleInCompany` enum (Viewer, Manager, Owner)
+- Application: `ICompanyRepository` and `IUserCompanyRepository` abstractions
+- Application: DTOs (CompanyDto, UserCompanyDto, CreateCompanyRequest, UpdateCompanyRequest, AddUserToCompanyRequest)
+- Application: Validators for all request DTOs using FluentValidation
+- Application: CQRS — CreateCompany, UpdateCompany, AddUserToCompany, RemoveUserFromCompany commands with handlers
+- Application: CQRS — GetMyCompanies, GetCompanyById, GetCompanyUsers queries with handlers
+- Infrastructure: EF configurations for Companies and UserCompanies tables with indexes
+- Infrastructure: CompanyRepository and UserCompanyRepository implementations
+- Infrastructure: DatabaseSeeder updated to seed test company linked to admin user
+- API: CompaniesController (CRUD + user management) and MyController (user-scoped endpoints)
+- Database: Migration `AddCompanies` — Companies table, UserCompanies table with unique constraint on (CompanyId, UserId)
+- Fixed .sln project paths (added `src/` prefix)
+- Fixed connection string port to 5437
+
+**Endpoints**:
+- `POST /api/v1/companies` → Create company (Admin only, creator becomes Owner)
+- `GET /api/v1/companies/{id}` → Get company by ID (access-checked)
+- `PUT /api/v1/companies/{id}` → Update company (Owner/Admin)
+- `POST /api/v1/companies/{companyId}/users` → Add user to company (Owner/Admin)
+- `DELETE /api/v1/companies/{companyId}/users/{userId}` → Remove user from company (Owner/Admin, prevents last owner removal)
+- `GET /api/v1/companies/{companyId}/users` → List company users (access-checked)
+- `GET /api/v1/my/companies` → List current user's companies
+
+**Business Rules**:
+- A user can belong to multiple companies with different roles
+- Each company must have at least one Owner
+- Company names must be unique
+- TaxId must be unique when provided
+- Access checks: Owner/Admin for write operations, company member for read
+
+---
+
+### v0.4 – Provider Management (US004)
+
+**Date**: 2026-03-06
+
+**Summary**: Implemented Provider and ProviderContact entities as the first company-scoped business domain. Providers are the central entity around which contracts, services, and costs revolve.
+
+**Changes**:
+- Domain: `Provider` entity (CompanyId, Name, LegalName, TaxId, Category, Website, Description, IsActive), `ProviderContact` entity (Name, Email, Phone, Role, IsPrimary), `ProviderCategory` enum (SaaS, Infrastructure, Consultancy, Benefits, Licensing, Telecommunications, Hardware, Other)
+- Application: `IProviderRepository` abstraction with paged/filtered queries
+- Application: `PagedResult<T>` generic wrapper for paginated responses
+- Application: DTOs (ProviderDto, ProviderContactDto, ProviderListItemDto, CreateProviderRequest, CreateProviderContactRequest, UpdateProviderRequest, AddProviderContactRequest, UpdateProviderContactRequest)
+- Application: Validators for all request DTOs using FluentValidation (including nested contact validation and primary contact uniqueness)
+- Application: CQRS Commands — CreateProvider, UpdateProvider, DeactivateProvider, AddProviderContact, UpdateProviderContact, RemoveProviderContact with handlers
+- Application: CQRS Queries — GetProviderById, GetProvidersPaged with handlers
+- Infrastructure: EF configurations for Providers and ProviderContacts tables with indexes (unique CompanyId+Name, Category, ProviderId)
+- Infrastructure: ProviderRepository implementation with filtering by category, active status, and search term
+- API: ProvidersController with 8 endpoints nested under `/companies/{companyId}/providers`
+- Database: Migration `AddProviders` — Providers table, ProviderContacts table with cascade delete
+
+**Endpoints**:
+- `GET /api/v1/companies/{companyId}/providers` → List providers (paginated, filterable by category/isActive/search)
+- `GET /api/v1/companies/{companyId}/providers/{providerId}` → Get provider with contacts
+- `POST /api/v1/companies/{companyId}/providers` → Create provider (optionally with contacts)
+- `PUT /api/v1/companies/{companyId}/providers/{providerId}` → Update provider details
+- `PATCH /api/v1/companies/{companyId}/providers/{providerId}/deactivate` → Soft-delete provider
+- `POST /api/v1/companies/{companyId}/providers/{providerId}/contacts` → Add contact
+- `PUT /api/v1/companies/{companyId}/providers/{providerId}/contacts/{contactId}` → Update contact
+- `DELETE /api/v1/companies/{companyId}/providers/{providerId}/contacts/{contactId}` → Remove contact
+
+**Business Rules**:
+- Providers are company-scoped (CompanyId is immutable after creation)
+- Provider names must be unique within a company (DB unique index)
+- At most one contact per provider can be marked as primary (enforced in handlers)
+- User must have access to the company to perform any provider operation
+- Deactivation is a soft-delete (sets IsActive = false)
+- Contacts cascade-delete when provider is deleted
+
+---
+
+## Upcoming
+
+### v0.5 – Provider Contracts (US005)
+- Contract entity and CRUD
+- Provider-scoped contract management

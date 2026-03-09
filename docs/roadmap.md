@@ -1,6 +1,6 @@
 # Allocare — Roadmap
 
-> Last updated: 2026-03-06
+> Last updated: 2026-03-09
 
 > **Note:** Backend stories use `USXXX` IDs. Frontend stories use `USFWXXX` IDs. Both tracks can progress in parallel once their dependencies are met.
 
@@ -17,6 +17,7 @@
 | US004 | Provider Management | Providers |
 | USFW001 | Frontend Project Scaffolding | Frontend / Infrastructure |
 | USFW002 | Company Management Frontend | Frontend / Multi-Tenant |
+| USFW003 | Authentication Frontend | Frontend / Authentication |
 
 ### In Progress / Pending
 | Story | Title | Domain | Dependencies | Status |
@@ -71,6 +72,7 @@
 |-------|-------|--------|--------|
 | USFW001 | Frontend Project Scaffolding | Small | ✅ Done |
 | USFW002 | Company Management Frontend | Medium | ✅ Done |
+| USFW003 | Authentication Frontend | Small | ✅ Done |
 
 ### Future Tiers (from Product Scaffolding)
 These stories exist as skeletons in the original Roadmap and need to be written as full user stories:
@@ -104,7 +106,8 @@ US001 (Scaffolding) ✅
 FRONTEND:
 USFW001 (Scaffolding) ✅
   └── USFW002 (Company Management) ✅
-  └── USFW003+ (Provider UI, Contract UI, Dashboard, etc.)
+  └── USFW003 (Authentication) ✅
+  └── USFW004+ (Provider UI, Contract UI, Dashboard, etc.)
 ```
 
 ---

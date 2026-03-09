@@ -1,8 +1,18 @@
 'use client';
 
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useState } from 'react';
 import type { UserDto } from '@/types/auth';
 import * as authService from '@/app/services/authService';
+
+function getStoredUser(): UserDto | null {
+  if (typeof window === 'undefined') return null;
+  const storedUser = localStorage.getItem('user');
+  const accessToken = localStorage.getItem('accessToken');
+  if (storedUser && accessToken) {
+    return JSON.parse(storedUser) as UserDto;
+  }
+  return null;
+}
 
 interface AuthContextValue {
   user: UserDto | null;
@@ -16,18 +26,8 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<UserDto | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (storedUser && accessToken) {
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
-  }, []);
+  const [user, setUser] = useState<UserDto | null>(getStoredUser);
+  const [isLoading] = useState(false);
 
   const storeAuth = useCallback((accessToken: string, refreshToken: string, userData: UserDto) => {
     localStorage.setItem('accessToken', accessToken);

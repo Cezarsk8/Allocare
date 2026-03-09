@@ -1,5 +1,53 @@
 # Allocore-frontend Development History
 
+## v0.3.0 — Authentication Frontend (USFW003 / US002)
+
+**Date**: 2026-03-09
+
+**Summary**: Full authentication UI — login, register, logout, auth context, route guards, and token management. Connects to US002 JWT backend endpoints.
+
+**Changes**:
+- ✅ Created auth types matching backend DTOs (`UserDto`, `AuthResponse`, `LoginRequest`, `RegisterRequest`, `RefreshTokenRequest`)
+- ✅ Created auth service with login, register, refresh, and logout API calls
+- ✅ Updated apiClient with 401 response interceptor (clears tokens, redirects to `/login`)
+- ✅ Created AuthContext with AuthProvider (user state, localStorage persistence, login/register/logout actions)
+- ✅ Created `useAuth` hook with context validation
+- ✅ Created Zod validation schemas (`loginSchema`, `registerSchema`) matching backend rules
+- ✅ Created LoginForm component (React Hook Form + Zod, loading spinner, API error display)
+- ✅ Created RegisterForm component (responsive 2-col name fields, password complexity validation)
+- ✅ Created auth layout with centered card, app branding, authenticated redirect
+- ✅ Created protected layout with auth guard (redirect to `/login` if unauthenticated)
+- ✅ Wrapped app with AuthProvider in providers.tsx
+- ✅ Updated root page to redirect to `/companies` (auth guard handles the rest)
+
+**Files Created**:
+- `src/types/auth.ts` — Auth DTOs
+- `src/app/services/authService.ts` — Auth API service (4 endpoints)
+- `src/app/context/AuthContext.tsx` — Auth provider with state management
+- `src/app/hooks/useAuth.ts` — Auth hook
+- `src/app/constants/authSchemas.ts` — Zod schemas for login/register
+- `src/app/components/auth/LoginForm.tsx` — Login form organism
+- `src/app/components/auth/RegisterForm.tsx` — Register form organism
+- `src/app/(auth)/layout.tsx` — Auth pages layout (centered, branded)
+- `src/app/(auth)/login/page.tsx` — Login page
+- `src/app/(auth)/register/page.tsx` — Register page
+- `src/app/(protected)/layout.tsx` — Protected routes guard
+
+**Files Modified**:
+- `src/app/services/apiClient.ts` — Added 401 interceptor
+- `src/app/providers.tsx` — Added AuthProvider wrapper
+- `src/app/page.tsx` — Changed redirect from `/login` to `/companies`
+
+**User-Facing Changes**:
+- `/login` — Login page with email/password form
+- `/register` — Registration page with name, email, password
+- Protected routes redirect to `/login` if not authenticated
+- Auth pages redirect to `/companies` if already authenticated
+
+**User Story**: USFW003 (backend: US002)
+
+---
+
 ## v0.2.0 — Company Management UI (USFW002 / US003)
 
 **Date**: 2026-03-06

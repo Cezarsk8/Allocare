@@ -18,11 +18,11 @@
 | USFW001 | Frontend Project Scaffolding | Frontend / Infrastructure |
 | USFW002 | Company Management Frontend | Frontend / Multi-Tenant |
 | USFW003 | Authentication Frontend | Frontend / Authentication |
+| US005 | Provider Contracts | Contracts |
 
 ### In Progress / Pending
 | Story | Title | Domain | Dependencies | Status |
 |-------|-------|--------|-------------|--------|
-| US005 | Provider Contracts | Contracts | US004 | Pending |
 | US006 | Notes System | Notes | US004, US005 | Pending |
 | US007 | Asset & Inventory Management | Inventory | US003, US011 | Pending |
 | US008 | Payment & Billing Domain | Payments | US004 | Pending |
@@ -37,11 +37,11 @@
 |-------|-------|--------|--------|
 | US003 | Company & Multi-Tenant Core | Medium | ✅ Done |
 
-### ~~Tier 2 — Provider Management~~ (partially completed)
+### ~~Tier 2 — Provider Management~~ ✅ Completed
 | Story | Title | Effort | Status |
 |-------|-------|--------|--------|
 | US004 | Provider Management | Medium | ✅ Done |
-| US005 | Provider Contracts | Large | Pending |
+| US005 | Provider Contracts | Large | ✅ Done |
 
 > **PM Commentary**: Providers and contracts are the core domain of Allocare. This tier delivers the primary value proposition — centralizing provider data.
 

@@ -17,7 +17,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 1.1 Create ContractStatus enum
 
-- [ ] Create `Allocore.Domain/Entities/Contracts/ContractStatus.cs`:
+- [x] Create `Allocore.Domain/Entities/Contracts/ContractStatus.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Contracts;
 
@@ -38,7 +38,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 1.2 Create BillingFrequency enum
 
-- [ ] Create `Allocore.Domain/Entities/Contracts/BillingFrequency.cs`:
+- [x] Create `Allocore.Domain/Entities/Contracts/BillingFrequency.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Contracts;
 
@@ -55,7 +55,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 1.3 Create Contract entity
 
-- [ ] Create `Allocore.Domain/Entities/Contracts/Contract.cs`:
+- [x] Create `Allocore.Domain/Entities/Contracts/Contract.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Contracts;
 
@@ -211,7 +211,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 1.4 Create ContractService join entity
 
-- [ ] Create `Allocore.Domain/Entities/Contracts/ContractService.cs`:
+- [x] Create `Allocore.Domain/Entities/Contracts/ContractService.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Contracts;
 
@@ -282,7 +282,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 2.1 Contract configuration
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/ContractConfiguration.cs`:
+- [x] Create `Allocore.Infrastructure/Persistence/Configurations/ContractConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
 
@@ -377,7 +377,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 2.2 ContractService configuration
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/ContractServiceConfiguration.cs`:
+- [x] Create `Allocore.Infrastructure/Persistence/Configurations/ContractServiceConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
 
@@ -424,7 +424,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 2.3 Update ApplicationDbContext
 
-- [ ] Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs` — add DbSets:
+- [x] Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs` — add DbSets:
   ```csharp
   using Allocore.Domain.Entities.Contracts;
 
@@ -434,7 +434,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 2.4 Create migration
 
-- [ ] Run migration:
+- [x] Run migration:
   ```bash
   dotnet ef migrations add AddContracts -s Allocore.API -p Allocore.Infrastructure
   ```
@@ -446,7 +446,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 3.1 Create IContractRepository interface
 
-- [ ] Create `Allocore.Application/Abstractions/Persistence/IContractRepository.cs`:
+- [x] Create `Allocore.Application/Abstractions/Persistence/IContractRepository.cs`:
   ```csharp
   namespace Allocore.Application.Abstractions.Persistence;
 
@@ -475,7 +475,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 3.2 Create ContractRepository implementation
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Repositories/ContractRepository.cs`:
+- [x] Create `Allocore.Infrastructure/Persistence/Repositories/ContractRepository.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Repositories;
 
@@ -616,7 +616,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 3.3 Register in DI
 
-- [ ] Update `Allocore.Infrastructure/DependencyInjection.cs`:
+- [x] Update `Allocore.Infrastructure/DependencyInjection.cs`:
   ```csharp
   services.AddScoped<IContractRepository, ContractRepository>();
   ```
@@ -627,7 +627,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 4.1 Create Contract DTOs
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/ContractDto.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/ContractDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.DTOs;
 
@@ -661,7 +661,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/ContractServiceDto.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/ContractServiceDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.DTOs;
 
@@ -676,7 +676,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/ContractListItemDto.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/ContractListItemDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.DTOs;
 
@@ -697,7 +697,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/CreateContractRequest.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/CreateContractRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.DTOs;
 
@@ -724,7 +724,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/CreateContractServiceRequest.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/CreateContractServiceRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.DTOs;
 
@@ -738,7 +738,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/UpdateContractRequest.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/UpdateContractRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.DTOs;
 
@@ -763,11 +763,15 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/AddContractServiceRequest.cs`:
-  - Same shape as `CreateContractServiceRequest`.
+- [x] Create `Allocore.Application/Features/Contracts/DTOs/UpdateContractStatusRequest.cs`:
+  ```csharp
+  namespace Allocore.Application.Features.Contracts.DTOs;
 
-- [ ] Create `Allocore.Application/Features/Contracts/DTOs/UpdateContractServiceRequest.cs`:
-  - Same shape as `CreateContractServiceRequest`.
+  public record UpdateContractStatusRequest(string Status);
+  ```
+  - **Note**: Used by the PATCH `/status` endpoint. Simple wrapper for the new status string.
+
+- [x] **Note**: `AddContractServiceCommand` and `UpdateContractServiceCommand` reuse `CreateContractServiceRequest` directly — no separate DTOs needed.
 
 ---
 
@@ -775,7 +779,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 5.1 Create validators
 
-- [ ] Create `Allocore.Application/Features/Contracts/Validators/CreateContractRequestValidator.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Validators/CreateContractRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.Validators;
 
@@ -855,7 +859,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   }
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/Validators/CreateContractServiceRequestValidator.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Validators/CreateContractServiceRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.Validators;
 
@@ -893,7 +897,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   }
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/Validators/UpdateContractRequestValidator.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Validators/UpdateContractRequestValidator.cs`:
   - Same rules as `CreateContractRequestValidator` but without `ProviderId` (provider cannot change after creation) and without `Services` collection.
 
 ---
@@ -902,7 +906,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 6.1 CreateContract command
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/CreateContractCommand.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/CreateContractCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Contracts.Commands;
 
@@ -913,7 +917,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   public record CreateContractCommand(Guid CompanyId, CreateContractRequest Request) : IRequest<Result<ContractDto>>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/CreateContractCommandHandler.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/CreateContractCommandHandler.cs`:
   - Verify user has access to company
   - Verify provider exists and belongs to company (`_providerRepository.GetByIdAsync`, check `provider.CompanyId == command.CompanyId`)
   - If `ContractNumber` provided, check uniqueness within company via `ExistsByContractNumberInCompanyAsync`
@@ -925,12 +929,12 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 6.2 UpdateContract command
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/UpdateContractCommand.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/UpdateContractCommand.cs`:
   ```csharp
   public record UpdateContractCommand(Guid CompanyId, Guid ContractId, UpdateContractRequest Request) : IRequest<Result<ContractDto>>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify user access to company
   - Load contract with details, verify `contract.CompanyId == command.CompanyId`
   - If `ContractNumber` changed, check uniqueness (excluding current contract)
@@ -938,44 +942,44 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 6.3 UpdateContractStatus command
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/UpdateContractStatusCommand.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/UpdateContractStatusCommand.cs`:
   ```csharp
   public record UpdateContractStatusCommand(Guid CompanyId, Guid ContractId, string NewStatus) : IRequest<Result>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify access, load contract, verify company
   - Parse status enum
   - Call `contract.UpdateStatus(newStatus)`, save
 
 ### 6.4 AddContractService command
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/AddContractServiceCommand.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/AddContractServiceCommand.cs`:
   ```csharp
   public record AddContractServiceCommand(Guid CompanyId, Guid ContractId, CreateContractServiceRequest Request) : IRequest<Result<ContractServiceDto>>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify access, load contract with services, verify company
   - Create `ContractService`, add to contract, save, return DTO
 
 ### 6.5 UpdateContractService command
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/UpdateContractServiceCommand.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/UpdateContractServiceCommand.cs`:
   ```csharp
-  public record UpdateContractServiceCommand(Guid CompanyId, Guid ContractId, Guid ServiceId, UpdateContractServiceRequest Request) : IRequest<Result<ContractServiceDto>>;
+  public record UpdateContractServiceCommand(Guid CompanyId, Guid ContractId, Guid ServiceId, CreateContractServiceRequest Request) : IRequest<Result<ContractServiceDto>>;
   ```
 
-- [ ] Create handler — verify access, load contract with services, find service, update, save.
+- [x] Create handler — verify access, load contract with services, find service, update, save.
 
 ### 6.6 RemoveContractService command
 
-- [ ] Create `Allocore.Application/Features/Contracts/Commands/RemoveContractServiceCommand.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Commands/RemoveContractServiceCommand.cs`:
   ```csharp
   public record RemoveContractServiceCommand(Guid CompanyId, Guid ContractId, Guid ServiceId) : IRequest<Result>;
   ```
 
-- [ ] Create handler — verify access, load contract with services, find service, remove, save.
+- [x] Create handler — verify access, load contract with services, find service, remove, save.
 
 ---
 
@@ -983,16 +987,16 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ### 7.1 GetContractById query
 
-- [ ] Create `Allocore.Application/Features/Contracts/Queries/GetContractByIdQuery.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Queries/GetContractByIdQuery.cs`:
   ```csharp
   public record GetContractByIdQuery(Guid CompanyId, Guid ContractId) : IRequest<Result<ContractDto>>;
   ```
 
-- [ ] Create handler — verify access, load with details, verify company, return DTO.
+- [x] Create handler — verify access, load with details, verify company, return DTO.
 
 ### 7.2 GetContractsPaged query
 
-- [ ] Create `Allocore.Application/Features/Contracts/Queries/GetContractsPagedQuery.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Queries/GetContractsPagedQuery.cs`:
   ```csharp
   public record GetContractsPagedQuery(
       Guid CompanyId,
@@ -1006,32 +1010,32 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
   ) : IRequest<PagedResult<ContractListItemDto>>;
   ```
 
-- [ ] Create handler — verify access, parse filters, call repository, map to list DTOs, return paged result.
+- [x] Create handler — verify access, parse filters, call repository, map to list DTOs, return paged result.
 
 ### 7.3 GetExpiringContracts query
 
-- [ ] Create `Allocore.Application/Features/Contracts/Queries/GetExpiringContractsQuery.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Queries/GetExpiringContractsQuery.cs`:
   ```csharp
   public record GetExpiringContractsQuery(Guid CompanyId, int WithinDays = 30) : IRequest<IEnumerable<ContractListItemDto>>;
   ```
 
-- [ ] Create handler — verify access, call `GetExpiringContractsAsync`, map to DTOs.
+- [x] Create handler — verify access, call `GetExpiringContractsAsync`, map to DTOs.
   - **Note**: This is a dashboard/alert query — returns contracts expiring within N days.
 
 ### 7.4 GetContractsByProvider query
 
-- [ ] Create `Allocore.Application/Features/Contracts/Queries/GetContractsByProviderQuery.cs`:
+- [x] Create `Allocore.Application/Features/Contracts/Queries/GetContractsByProviderQuery.cs`:
   ```csharp
   public record GetContractsByProviderQuery(Guid CompanyId, Guid ProviderId) : IRequest<IEnumerable<ContractListItemDto>>;
   ```
 
-- [ ] Create handler — verify access, verify provider belongs to company, call `GetByProviderAsync`, map to DTOs.
+- [x] Create handler — verify access, verify provider belongs to company, call `GetByProviderAsync`, map to DTOs.
 
 ---
 
 ## Step 8: API Layer — ContractsController
 
-- [ ] Create `Allocore.API/Controllers/v1/ContractsController.cs`:
+- [x] Create `Allocore.API/Controllers/v1/ContractsController.cs`:
   ```csharp
   namespace Allocore.API.Controllers.v1;
 
@@ -1159,7 +1163,7 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
           Guid companyId,
           Guid contractId,
           Guid serviceId,
-          [FromBody] UpdateContractServiceRequest request,
+          [FromBody] CreateContractServiceRequest request,
           CancellationToken cancellationToken)
       {
           var result = await _mediator.Send(new UpdateContractServiceCommand(companyId, contractId, serviceId, request), cancellationToken);
@@ -1189,10 +1193,10 @@ Currently, Allocore has providers (US004) but no way to track the contractual re
 
 ## Step 9: Build, Verify & Manual Test
 
-- [ ] Run `dotnet build` — ensure entire solution compiles
-- [ ] Apply migration: `dotnet ef database update -s Allocore.API -p Allocore.Infrastructure`
-- [ ] Run application and verify Swagger shows all new endpoints
-- [ ] Manual test via Swagger:
+- [x] Run `dotnet build` — ensure entire solution compiles
+- [x] Apply migration: `dotnet ef database update -s Allocore.API -p Allocore.Infrastructure`
+- [x] Run application and verify Swagger shows all new endpoints
+- [x] Manual test via Swagger:
   1. Create a contract for an existing provider → 201
   2. Get contract by ID → 200 with services and provider name
   3. List contracts (paginated, filtered by provider/status) → 200
@@ -1227,7 +1231,7 @@ No new NuGet packages required.
 | **Infrastructure** | `Allocore.Infrastructure/Persistence/Repositories/ContractRepository.cs` | **Create** |
 | **Infrastructure** | `Allocore.Infrastructure/DependencyInjection.cs` | **Update** — add registration |
 | **Application** | `Allocore.Application/Abstractions/Persistence/IContractRepository.cs` | **Create** |
-| **Application** | `Allocore.Application/Features/Contracts/DTOs/*.cs` | **Create** (9 files) |
+| **Application** | `Allocore.Application/Features/Contracts/DTOs/*.cs` | **Create** (8 files) |
 | **Application** | `Allocore.Application/Features/Contracts/Validators/*.cs` | **Create** (3 files) |
 | **Application** | `Allocore.Application/Features/Contracts/Commands/*.cs` | **Create** (12 files) |
 | **Application** | `Allocore.Application/Features/Contracts/Queries/*.cs` | **Create** (8 files) |
@@ -1314,19 +1318,19 @@ No new NuGet packages required.
 
 ## Acceptance Criteria
 
-- [ ] Authenticated users can create contracts linked to providers within their companies
-- [ ] Contracts are company-scoped — no cross-tenant data leakage
-- [ ] Contract numbers are unique within a company (when provided)
-- [ ] Contracts track full lifecycle: status, dates, renewal, billing frequency
-- [ ] Contracts support financial details: total value, currency, payment terms, price conditions
-- [ ] Contracts track legal and ownership info: legal team contact, internal owner
-- [ ] Contracts support multiple service line items with pricing
-- [ ] Contracts can be listed with pagination and filtered by provider, status, expiring
-- [ ] Expiring contracts endpoint returns contracts expiring within N days
-- [ ] Cannot delete a provider that has contracts (FK RESTRICT)
-- [ ] Migrations created and applied (`AddContracts`)
-- [ ] `dotnet build` passes without errors
-- [ ] Swagger displays all new endpoints
+- [x] Authenticated users can create contracts linked to providers within their companies
+- [x] Contracts are company-scoped — no cross-tenant data leakage
+- [x] Contract numbers are unique within a company (when provided)
+- [x] Contracts track full lifecycle: status, dates, renewal, billing frequency
+- [x] Contracts support financial details: total value, currency, payment terms, price conditions
+- [x] Contracts track legal and ownership info: legal team contact, internal owner
+- [x] Contracts support multiple service line items with pricing
+- [x] Contracts can be listed with pagination and filtered by provider, status, expiring
+- [x] Expiring contracts endpoint returns contracts expiring within N days
+- [x] Cannot delete a provider that has contracts (FK RESTRICT)
+- [x] Migrations created and applied (`AddContracts`)
+- [x] `dotnet build` passes without errors
+- [x] Swagger displays all new endpoints
 
 ---
 

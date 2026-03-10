@@ -136,8 +136,65 @@
 
 ---
 
+### v0.5 – Provider Contracts (US005)
+
+**Date**: 2026-03-09
+
+**Summary**: Full CRUD for provider contracts with service line items, status lifecycle, billing/financial tracking, and company-scoped multi-tenancy. Contracts link providers to commercial terms, dates, and services.
+
+**Changes**:
+- ✅ Domain: Created `Contract` entity with 19 fields (title, status, dates, billing, financial, legal)
+- ✅ Domain: Created `ContractService` join entity (service line items with pricing)
+- ✅ Domain: Created `ContractStatus` enum (8 states: Draft → Active → Expired/Cancelled/Terminated)
+- ✅ Domain: Created `BillingFrequency` enum (Monthly, Quarterly, SemiAnnual, Annual, OneOff, Custom)
+- ✅ Infrastructure: EF Core configurations with indexes, filtered unique constraint on ContractNumber
+- ✅ Infrastructure: `ContractRepository` with paged queries, filtering, expiring/renewal queries
+- ✅ Application: 8 DTOs (Contract, ContractService, ListItem, Create/Update requests)
+- ✅ Application: 3 FluentValidation validators (CreateContract, UpdateContract, CreateContractService)
+- ✅ Application: 6 CQRS commands (Create, Update, UpdateStatus, AddService, UpdateService, RemoveService)
+- ✅ Application: 4 CQRS queries (GetById, GetPaged, GetExpiring, GetByProvider)
+- ✅ Application: Shared `ContractMapper` for DTO mapping
+- ✅ API: `ContractsController` with 10 endpoints nested under `/companies/{companyId}/contracts`
+- ✅ Migration: `AddContracts` (Contracts + ContractServices tables)
+
+**Files Created**: 35 files
+- `Allocore.Domain/Entities/Contracts/` — 4 files (Contract, ContractService, ContractStatus, BillingFrequency)
+- `Allocore.Infrastructure/Persistence/Configurations/` — 2 files (ContractConfiguration, ContractServiceConfiguration)
+- `Allocore.Infrastructure/Persistence/Repositories/ContractRepository.cs`
+- `Allocore.Application/Abstractions/Persistence/IContractRepository.cs`
+- `Allocore.Application/Features/Contracts/` — 26 files (DTOs, Validators, Commands, Queries, Mapper)
+- `Allocore.API/Controllers/v1/ContractsController.cs`
+
+**Files Modified**: 2 files
+- `ApplicationDbContext.cs` — Added Contracts + ContractServices DbSets
+- `DependencyInjection.cs` — Registered IContractRepository
+
+**Endpoints**:
+- `GET /api/v1/companies/{companyId}/contracts` → List contracts (paginated, filterable by provider/status/expiring/search)
+- `GET /api/v1/companies/{companyId}/contracts/{contractId}` → Get contract with services and provider
+- `GET /api/v1/companies/{companyId}/contracts/expiring` → Get contracts expiring within N days
+- `GET /api/v1/companies/{companyId}/contracts/by-provider/{providerId}` → Get contracts for a provider
+- `POST /api/v1/companies/{companyId}/contracts` → Create contract (with optional services)
+- `PUT /api/v1/companies/{companyId}/contracts/{contractId}` → Update contract details
+- `PATCH /api/v1/companies/{companyId}/contracts/{contractId}/status` → Update contract status
+- `POST /api/v1/companies/{companyId}/contracts/{contractId}/services` → Add service to contract
+- `PUT /api/v1/companies/{companyId}/contracts/{contractId}/services/{serviceId}` → Update service
+- `DELETE /api/v1/companies/{companyId}/contracts/{contractId}/services/{serviceId}` → Remove service
+
+**Business Rules**:
+- Contracts are company-scoped (CompanyId immutable after creation)
+- Contract numbers unique within a company (filtered unique index, nullable)
+- Provider must exist and belong to the same company
+- Cannot delete a provider that has contracts (FK RESTRICT)
+- ContractServices cascade-delete when contract is deleted
+- Status transitions are user-driven (no state machine enforcement)
+- Financial fields use decimal(18,2) precision
+
+**User Story**: US005
+
+---
+
 ## Upcoming
 
-### v0.5 – Provider Contracts (US005)
-- Contract entity and CRUD
-- Provider-scoped contract management
+- US006 – Notes System
+- US007 – Asset & Inventory Management

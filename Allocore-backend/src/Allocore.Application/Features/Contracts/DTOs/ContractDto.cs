@@ -1,0 +1,30 @@
+namespace Allocore.Application.Features.Contracts.DTOs;
+
+public record ContractDto(
+    Guid Id,
+    Guid CompanyId,
+    Guid ProviderId,
+    string ProviderName,
+    string Title,
+    string? ContractNumber,
+    string Status,
+    DateTime? StartDate,
+    DateTime? EndDate,
+    DateTime? RenewalDate,
+    bool AutoRenew,
+    int? RenewalNoticeDays,
+    string BillingFrequency,
+    decimal? TotalValue,
+    string? Currency,
+    string? PaymentTerms,
+    string? PriceConditions,
+    string? LegalTeamContact,
+    string? InternalOwner,
+    string? Description,
+    string? TermsAndConditions,
+    bool IsExpired,
+    bool IsExpiringSoon,
+    DateTime CreatedAt,
+    DateTime? UpdatedAt,
+    IEnumerable<ContractServiceDto> Services
+);

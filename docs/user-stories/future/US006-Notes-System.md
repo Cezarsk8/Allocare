@@ -17,7 +17,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 1.1 Create NoteEntityType enum
 
-- [ ] Create `Allocore.Domain/Entities/Notes/NoteEntityType.cs`:
+- [x] Create `Allocore.Domain/Entities/Notes/NoteEntityType.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Notes;
 
@@ -33,7 +33,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 1.2 Create NoteCategory enum
 
-- [ ] Create `Allocore.Domain/Entities/Notes/NoteCategory.cs`:
+- [x] Create `Allocore.Domain/Entities/Notes/NoteCategory.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Notes;
 
@@ -55,7 +55,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 1.3 Create Note entity
 
-- [ ] Create `Allocore.Domain/Entities/Notes/Note.cs`:
+- [x] Create `Allocore.Domain/Entities/Notes/Note.cs`:
   ```csharp
   namespace Allocore.Domain.Entities.Notes;
 
@@ -134,7 +134,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 2.1 Note configuration
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Configurations/NoteConfiguration.cs`:
+- [x] Create `Allocore.Infrastructure/Persistence/Configurations/NoteConfiguration.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Configurations;
 
@@ -196,7 +196,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 2.2 Update ApplicationDbContext
 
-- [ ] Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs` — add DbSet:
+- [x] Update `Allocore.Infrastructure/Persistence/ApplicationDbContext.cs` — add DbSet:
   ```csharp
   using Allocore.Domain.Entities.Notes;
 
@@ -205,7 +205,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 2.3 Create migration
 
-- [ ] Run migration:
+- [x] Run migration:
   ```bash
   dotnet ef migrations add AddNotes -s Allocore.API -p Allocore.Infrastructure
   ```
@@ -217,7 +217,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 3.1 Create INoteRepository interface
 
-- [ ] Create `Allocore.Application/Abstractions/Persistence/INoteRepository.cs`:
+- [x] Create `Allocore.Application/Abstractions/Persistence/INoteRepository.cs`:
   ```csharp
   namespace Allocore.Application.Abstractions.Persistence;
 
@@ -250,7 +250,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 3.2 Create NoteRepository implementation
 
-- [ ] Create `Allocore.Infrastructure/Persistence/Repositories/NoteRepository.cs`:
+- [x] Create `Allocore.Infrastructure/Persistence/Repositories/NoteRepository.cs`:
   ```csharp
   namespace Allocore.Infrastructure.Persistence.Repositories;
 
@@ -351,16 +351,16 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 3.3 Register in DI
 
-- [ ] Update `Allocore.Infrastructure/DependencyInjection.cs`:
+- [x] Update `Allocore.Infrastructure/DependencyInjection.cs`:
   ```csharp
   services.AddScoped<INoteRepository, NoteRepository>();
   ```
 
 ---
 
-## Step 4: Application Layer — DTOs
+## Step 4: Application Layer — DTOs & Mapper
 
-- [ ] Create `Allocore.Application/Features/Notes/DTOs/NoteDto.cs`:
+- [x] Create `Allocore.Application/Features/Notes/DTOs/NoteDto.cs`:
   ```csharp
   namespace Allocore.Application.Features.Notes.DTOs;
 
@@ -378,9 +378,9 @@ Currently, Allocore has no way to record free-text notes or activity history on 
       DateTime? UpdatedAt
   );
   ```
-  - **Note**: `AuthorName` is resolved by joining with the User table at query time.
+  - **Note**: `AuthorName` is resolved by batch-loading users from the `IUserRepository` at query time.
 
-- [ ] Create `Allocore.Application/Features/Notes/DTOs/CreateNoteRequest.cs`:
+- [x] Create `Allocore.Application/Features/Notes/DTOs/CreateNoteRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Notes.DTOs;
 
@@ -392,7 +392,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
   );
   ```
 
-- [ ] Create `Allocore.Application/Features/Notes/DTOs/UpdateNoteRequest.cs`:
+- [x] Create `Allocore.Application/Features/Notes/DTOs/UpdateNoteRequest.cs`:
   ```csharp
   namespace Allocore.Application.Features.Notes.DTOs;
 
@@ -404,11 +404,51 @@ Currently, Allocore has no way to record free-text notes or activity history on 
   );
   ```
 
+- [x] Create `Allocore.Application/Features/Notes/NoteMapper.cs`:
+  ```csharp
+  namespace Allocore.Application.Features.Notes;
+
+  using Allocore.Application.Features.Notes.DTOs;
+  using Allocore.Domain.Entities.Notes;
+
+  public static class NoteMapper
+  {
+      public static NoteDto ToDto(Note note, string authorName)
+          => new(
+              note.Id,
+              note.EntityType.ToString(),
+              note.EntityId,
+              note.AuthorUserId,
+              authorName,
+              note.Content,
+              note.Category.ToString(),
+              note.IsPinned,
+              note.ReminderDate,
+              note.CreatedAt,
+              note.UpdatedAt);
+  }
+  ```
+  - **Note**: Follows the `ContractMapper` pattern from US005. AuthorName is resolved externally and passed in.
+
+### 4.1 Add batch user lookup to IUserRepository
+
+- [x] Update `Allocore.Application/Abstractions/Persistence/IUserRepository.cs` — add method:
+  ```csharp
+  Task<IEnumerable<User>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
+  ```
+
+- [x] Update `Allocore.Infrastructure/Persistence/Repositories/UserRepository.cs` — implement:
+  ```csharp
+  public async Task<IEnumerable<User>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+      => await _context.Users.Where(u => ids.Contains(u.Id)).ToListAsync(cancellationToken);
+  ```
+  - **Note**: Enables efficient batch loading of author names for paginated note results instead of N individual queries.
+
 ---
 
 ## Step 5: Application Layer — Validators
 
-- [ ] Create `Allocore.Application/Features/Notes/Validators/CreateNoteRequestValidator.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Validators/CreateNoteRequestValidator.cs`:
   ```csharp
   namespace Allocore.Application.Features.Notes.Validators;
 
@@ -435,7 +475,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
   }
   ```
 
-- [ ] Create `Allocore.Application/Features/Notes/Validators/UpdateNoteRequestValidator.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Validators/UpdateNoteRequestValidator.cs`:
   - Same rules as `CreateNoteRequestValidator`.
 
 ---
@@ -444,7 +484,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 6.1 CreateNote command
 
-- [ ] Create `Allocore.Application/Features/Notes/Commands/CreateNoteCommand.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Commands/CreateNoteCommand.cs`:
   ```csharp
   namespace Allocore.Application.Features.Notes.Commands;
 
@@ -461,7 +501,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
   ) : IRequest<Result<NoteDto>>;
   ```
 
-- [ ] Create `Allocore.Application/Features/Notes/Commands/CreateNoteCommandHandler.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Commands/CreateNoteCommandHandler.cs`:
   - Verify user has access to company
   - Verify the target entity exists and belongs to the company:
     - If `EntityType == Provider`: load provider, check `provider.CompanyId == command.CompanyId`
@@ -472,38 +512,38 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 6.2 UpdateNote command
 
-- [ ] Create `Allocore.Application/Features/Notes/Commands/UpdateNoteCommand.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Commands/UpdateNoteCommand.cs`:
   ```csharp
   public record UpdateNoteCommand(Guid CompanyId, Guid NoteId, UpdateNoteRequest Request) : IRequest<Result<NoteDto>>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify user access to company
   - Load note, verify `note.CompanyId == command.CompanyId`
-  - Verify current user is the author (`note.AuthorUserId == _currentUser.UserId`) OR user is Admin
+  - Verify current user is the author (`note.AuthorUserId == _currentUser.UserId`) OR user has "Admin" role (`_currentUser.Roles.Contains("Admin")`)
   - Parse category, call `note.Update(...)`, save, return DTO
 
 ### 6.3 DeleteNote command
 
-- [ ] Create `Allocore.Application/Features/Notes/Commands/DeleteNoteCommand.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Commands/DeleteNoteCommand.cs`:
   ```csharp
   public record DeleteNoteCommand(Guid CompanyId, Guid NoteId) : IRequest<Result>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify user access to company
   - Load note, verify company
-  - Verify current user is author OR Admin
+  - Verify current user is author OR has "Admin" role
   - Delete note, save
 
 ### 6.4 TogglePinNote command
 
-- [ ] Create `Allocore.Application/Features/Notes/Commands/TogglePinNoteCommand.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Commands/TogglePinNoteCommand.cs`:
   ```csharp
   public record TogglePinNoteCommand(Guid CompanyId, Guid NoteId) : IRequest<Result>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify access, load note, verify company
   - Toggle: if pinned → unpin, if unpinned → pin
   - Save
@@ -514,7 +554,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 7.1 GetNotesByEntity query
 
-- [ ] Create `Allocore.Application/Features/Notes/Queries/GetNotesByEntityQuery.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Queries/GetNotesByEntityQuery.cs`:
   ```csharp
   namespace Allocore.Application.Features.Notes.Queries;
 
@@ -533,7 +573,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
   ) : IRequest<PagedResult<NoteDto>>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify user access to company
   - Verify entity exists and belongs to company
   - Parse category filter if provided
@@ -543,7 +583,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ### 7.2 GetReminders query
 
-- [ ] Create `Allocore.Application/Features/Notes/Queries/GetRemindersQuery.cs`:
+- [x] Create `Allocore.Application/Features/Notes/Queries/GetRemindersQuery.cs`:
   ```csharp
   public record GetRemindersQuery(
       Guid CompanyId,
@@ -552,7 +592,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
   ) : IRequest<IEnumerable<NoteDto>>;
   ```
 
-- [ ] Create handler:
+- [x] Create handler:
   - Verify user access to company
   - Default `FromDate` to today, `ToDate` to 30 days from now
   - Call `_noteRepository.GetRemindersForCompanyAsync(...)`
@@ -562,7 +602,7 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ## Step 8: API Layer — NotesController
 
-- [ ] Create `Allocore.API/Controllers/v1/NotesController.cs`:
+- [x] Create `Allocore.API/Controllers/v1/NotesController.cs`:
   ```csharp
   namespace Allocore.API.Controllers.v1;
 
@@ -733,10 +773,10 @@ Currently, Allocore has no way to record free-text notes or activity history on 
 
 ## Step 9: Build, Verify & Manual Test
 
-- [ ] Run `dotnet build` — ensure entire solution compiles
-- [ ] Apply migration: `dotnet ef database update -s Allocore.API -p Allocore.Infrastructure`
-- [ ] Run application and verify Swagger shows all new endpoints
-- [ ] Manual test via Swagger:
+- [x] Run `dotnet build` — ensure entire solution compiles
+- [x] Apply migration: `dotnet ef database update -s Allocore.API -p Allocore.Infrastructure`
+- [x] Run application and verify Swagger shows all new endpoints
+- [x] Manual test via Swagger:
   1. Add a note to a provider → 200
   2. Add a note to a contract → 200
   3. Get provider notes (timeline) → 200, ordered by pinned then date
@@ -826,18 +866,18 @@ No new NuGet packages required.
 
 ## Acceptance Criteria
 
-- [ ] Users can add notes to providers and contracts
-- [ ] Notes form a chronological timeline (newest first, pinned at top)
-- [ ] Notes support categories (General, Negotiation, Meeting, Decision, etc.)
-- [ ] Notes can be pinned to stay at the top of the timeline
-- [ ] Notes support optional reminder dates
-- [ ] Only the note author or an Admin can edit/delete a note
-- [ ] Notes are company-scoped — no cross-tenant data leakage
-- [ ] Notes validate that the target entity exists and belongs to the company
-- [ ] Reminders endpoint returns notes with upcoming reminder dates
-- [ ] Migrations created and applied (`AddNotes`)
-- [ ] `dotnet build` passes without errors
-- [ ] Swagger displays all new endpoints
+- [x] Users can add notes to providers and contracts
+- [x] Notes form a chronological timeline (newest first, pinned at top)
+- [x] Notes support categories (General, Negotiation, Meeting, Decision, etc.)
+- [x] Notes can be pinned to stay at the top of the timeline
+- [x] Notes support optional reminder dates
+- [x] Only the note author or an Admin can edit/delete a note
+- [x] Notes are company-scoped — no cross-tenant data leakage
+- [x] Notes validate that the target entity exists and belongs to the company
+- [x] Reminders endpoint returns notes with upcoming reminder dates
+- [x] Migrations created and applied (`AddNotes`)
+- [x] `dotnet build` passes without errors
+- [x] Swagger displays all new endpoints
 
 ---
 

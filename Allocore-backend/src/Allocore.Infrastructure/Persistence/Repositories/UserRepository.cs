@@ -39,6 +39,12 @@ public class UserRepository : IUserRepository
         return (users, totalCount);
     }
     
+    public async Task<IEnumerable<User>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    {
+        var idList = ids.ToList();
+        return await _context.Users.Where(u => idList.Contains(u.Id)).ToListAsync(cancellationToken);
+    }
+
     public async Task<User> AddAsync(User entity, CancellationToken cancellationToken = default)
     {
         await _context.Users.AddAsync(entity, cancellationToken);

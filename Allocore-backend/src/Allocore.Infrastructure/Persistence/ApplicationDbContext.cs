@@ -5,6 +5,7 @@ using Allocore.Domain.Entities.Users;
 using Allocore.Domain.Entities.Companies;
 using Allocore.Domain.Entities.Providers;
 using Allocore.Domain.Entities.Contracts;
+using Allocore.Domain.Entities.Notes;
 using Allocore.Application.Abstractions.Persistence;
 
 public class ApplicationDbContext : DbContext, IUnitOfWork
@@ -17,6 +18,7 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<ProviderContact> ProviderContacts => Set<ProviderContact>();
     public DbSet<Contract> Contracts => Set<Contract>();
     public DbSet<ContractService> ContractServices => Set<ContractService>();
+    public DbSet<Note> Notes => Set<Note>();
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     

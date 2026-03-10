@@ -194,7 +194,64 @@
 
 ---
 
+### v0.6 – Notes System (US006)
+
+**Date**: 2026-03-09
+
+**Summary**: Polymorphic Notes system that attaches to any entity (Provider, Contract) via EntityType + EntityId pattern. Supports categories, pinning, reminders, and author tracking with batch user name resolution.
+
+**Changes**:
+- ✅ Domain: `Note` entity (CompanyId, EntityType, EntityId, AuthorUserId, Content, Category, IsPinned, ReminderDate)
+- ✅ Domain: `NoteEntityType` enum (Provider, Contract — extensible for future entities)
+- ✅ Domain: `NoteCategory` enum (10 categories: General, Negotiation, Meeting, Decision, Reminder, Issue, FollowUp, PhoneCall, Email, InternalDiscussion)
+- ✅ Infrastructure: `NoteConfiguration` with composite index on (EntityType, EntityId), filtered index on ReminderDate
+- ✅ Infrastructure: `NoteRepository` with paged queries, pinned notes, reminders, entity count
+- ✅ Infrastructure: Added `GetByIdsAsync` to `IUserRepository` / `UserRepository` for batch author name resolution
+- ✅ Application: `INoteRepository` abstraction
+- ✅ Application: DTOs (NoteDto, CreateNoteRequest, UpdateNoteRequest)
+- ✅ Application: `NoteMapper` (shared static mapper following ContractMapper pattern)
+- ✅ Application: Validators (CreateNoteRequestValidator, UpdateNoteRequestValidator)
+- ✅ Application: CQRS Commands — CreateNote, UpdateNote, DeleteNote, TogglePinNote with handlers
+- ✅ Application: CQRS Queries — GetNotesByEntity (paginated), GetReminders with handlers
+- ✅ API: `NotesController` with 8 endpoints (mixed routing: entity-specific + generic note operations)
+- ✅ Migration: `AddNotes` (Notes table with 5 indexes, no FKs — polymorphic association)
+
+**Files Created**: 22 files
+- `Allocore.Domain/Entities/Notes/` — 3 files (Note, NoteEntityType, NoteCategory)
+- `Allocore.Infrastructure/Persistence/Configurations/NoteConfiguration.cs`
+- `Allocore.Infrastructure/Persistence/Repositories/NoteRepository.cs`
+- `Allocore.Application/Abstractions/Persistence/INoteRepository.cs`
+- `Allocore.Application/Features/Notes/` — 15 files (DTOs, Mapper, Validators, Commands, Queries)
+- `Allocore.API/Controllers/v1/NotesController.cs`
+
+**Files Modified**: 4 files
+- `IUserRepository.cs` — Added `GetByIdsAsync`
+- `UserRepository.cs` — Implemented `GetByIdsAsync`
+- `ApplicationDbContext.cs` — Added Notes DbSet
+- `DependencyInjection.cs` — Registered INoteRepository
+
+**Endpoints**:
+- `GET /api/v1/companies/{companyId}/providers/{providerId}/notes` → Get provider notes (paginated timeline)
+- `POST /api/v1/companies/{companyId}/providers/{providerId}/notes` → Add note to provider
+- `GET /api/v1/companies/{companyId}/contracts/{contractId}/notes` → Get contract notes (paginated timeline)
+- `POST /api/v1/companies/{companyId}/contracts/{contractId}/notes` → Add note to contract
+- `PUT /api/v1/companies/{companyId}/notes/{noteId}` → Update note (author or admin)
+- `DELETE /api/v1/companies/{companyId}/notes/{noteId}` → Delete note (author or admin)
+- `PATCH /api/v1/companies/{companyId}/notes/{noteId}/pin` → Toggle pin status
+- `GET /api/v1/companies/{companyId}/reminders` → Get upcoming reminders
+
+**Business Rules**:
+- Notes are company-scoped (CompanyId, no cross-tenant leakage)
+- Polymorphic association: EntityType + EntityId, no FK constraint on EntityId
+- Only author or Admin can edit/delete notes
+- Pinned notes appear first in timeline, then newest first
+- Reminders are queryable but no automated notifications
+- Author names resolved via batch user lookup (GetByIdsAsync)
+
+**User Story**: US006
+
+---
+
 ## Upcoming
 
-- US006 – Notes System
 - US007 – Asset & Inventory Management

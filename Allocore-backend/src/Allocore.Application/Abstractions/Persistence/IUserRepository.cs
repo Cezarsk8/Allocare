@@ -8,4 +8,5 @@ public interface IUserRepository : IReadRepository<User>, IWriteRepository<User>
     Task<User?> GetByPasswordResetTokenAsync(string token, CancellationToken cancellationToken = default);
     Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default);
     Task<(IEnumerable<User> Users, int TotalCount)> GetPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default);
+    Task<IEnumerable<User>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 }

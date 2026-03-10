@@ -1,6 +1,6 @@
 # Allocare — Roadmap
 
-> Last updated: 2026-03-09
+> Last updated: 2026-03-10
 
 > **Note:** Backend stories use `USXXX` IDs. Frontend stories use `USFWXXX` IDs. Both tracks can progress in parallel once their dependencies are met.
 
@@ -19,11 +19,11 @@
 | USFW002 | Company Management Frontend | Frontend / Multi-Tenant |
 | USFW003 | Authentication Frontend | Frontend / Authentication |
 | US005 | Provider Contracts | Contracts |
+| US006 | Notes System | Notes |
 
 ### In Progress / Pending
 | Story | Title | Domain | Dependencies | Status |
 |-------|-------|--------|-------------|--------|
-| US006 | Notes System | Notes | US004, US005 | Pending |
 | US007 | Asset & Inventory Management | Inventory | US003, US011 | Pending |
 | US008 | Payment & Billing Domain | Payments | US004 | Pending |
 | US009 | Email Payment Integration | Email/AI | US008 | Pending |
@@ -45,10 +45,10 @@
 
 > **PM Commentary**: Providers and contracts are the core domain of Allocare. This tier delivers the primary value proposition — centralizing provider data.
 
-### Tier 3 — Enrichment & Activity
-| Story | Title | Effort |
-|-------|-------|--------|
-| US006 | Notes System | Medium |
+### ~~Tier 3 — Enrichment & Activity~~ ✅ Completed
+| Story | Title | Effort | Status |
+|-------|-------|--------|--------|
+| US006 | Notes System | Medium | ✅ Done |
 
 > **PM Commentary**: Notes add context to providers and contracts. Important for daily use but not blocking core functionality.
 
@@ -93,9 +93,9 @@ US001 (Scaffolding) ✅
   └── US002 (JWT Auth) ✅
        └── US003 (Multi-Tenant) ✅
             ├── US004 (Providers) ✅
-            │    ├── US005 (Contracts)
-            │    │    └── US006 (Notes) ← also depends on US004
-            │    ├── US006 (Notes)
+            │    ├── US005 (Contracts) ✅
+            │    │    └── US006 (Notes) ✅
+            │    ├── US006 (Notes) ✅
             │    └── US008 (Payments)
             │         └── US009 (Email Integration)
             ├── US010 (Cost Centers) — skeleton

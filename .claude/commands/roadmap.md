@@ -4,9 +4,9 @@ Analise todas as user stories futuras e otimize o roadmap, reordenando por impor
 
 1. **Leia o estado atual do projeto**:
    - Roadmap atual: `docs/roadmap.md`
-   - Development History backend: `Allocore-backend/Docs/System/DevelopmentHistory.md` (últimas versões)
-   - Arquitetura backend: `Allocore-backend/Docs/System/ProjectStructure.md`
-   - Product Vision: `Allocore-backend/Docs/System/ProductVision.md`
+   - Development History backend: `docs/development-history.md (seção Backend)` (últimas versões)
+   - Inspecione o codebase diretamente para entender a arquitetura
+   - Product Vision: `docs/product-vision.md`
 
 2. **Leia TODAS as user stories futuras**:
    - Liste todos os arquivos em `docs/user-stories/future/` (incluindo subpastas)

@@ -7,64 +7,111 @@ Centraliza dados de provedores, contratos, serviços e custos em um sistema estr
 
 Domínio principal: **Provider Registry → Contract Management → Cost Tracking → Cost Allocation → Reporting**.
 
+## Stack
+
+- **Backend**: .NET 8 (Clean Architecture, PostgreSQL, CQRS + MediatR)
+- **Frontend**: Next.js 15 (TypeScript, Tailwind CSS 4, Atomic Design)
+
 ## Estrutura do Repositório
 
 ```
 Allocare/
-├── docs/                    → Documentação centralizada (roadmap, user stories)
-│   ├── roadmap.md
+├── docs/                     → Documentação centralizada (TODA a documentação vive aqui)
+│   ├── roadmap.md            → Priorização de histórias
+│   ├── product-vision.md     → Visão de produto
+│   ├── design-system.md      → Design system (cores, componentes)
+│   ├── development-history.md → Histórico de dev unificado (seções Backend + Frontend)
+│   ├── release-notes/        → Release notes unificados (criados pelo /ship)
 │   └── user-stories/
-│       ├── future/          → Histórias pendentes (backend + frontend)
-│       └── history/         → Histórias implementadas
-│           ├── backend/
-│           └── frontend/
-├── Allocore-backend/        → Backend (.NET 8 Web API + PostgreSQL, Clean Architecture + CQRS)
-└── Allocore-frontend/       → Frontend (Next.js 15 + TypeScript + Tailwind CSS 4 — placeholder)
+│       ├── future/           → Histórias pendentes
+│       └── history/          → Histórias implementadas
+│           ├── backend/{domain}/
+│           └── frontend/{domain}/
+├── Allocore-backend/         → Backend (.NET 8 Web API + PostgreSQL, só código)
+└── Allocore-frontend/        → Frontend (Next.js 15 + TypeScript + Tailwind CSS 4, só código)
 ```
 
-Cada projeto tem seu próprio repositório git e suas próprias pastas de docs técnicos (`Allocore-backend/Docs/`, `Allocore-frontend/docs/`).
-User stories e roadmap vivem centralizados em `docs/` na raiz.
+É um monorepo com um único .git na raiz. **Toda a documentação vive centralizada em `docs/`** — os subprojetos contêm apenas código.
 
 ---
 
 ## Workflow de Desenvolvimento
 
-Cada feature segue este processo **obrigatório**, nesta ordem:
+Cada feature segue até 5 fases sequenciais:
 
-### 1. Escolher a história
-Consulte o roadmap para pegar a próxima história do topo:
-`docs/roadmap.md`
+```
+/discuss  →  /dev-be  →  /dev-fe  →  /ship
+```
 
-As histórias futuras estão em `docs/user-stories/future/` (e subpastas).
+Comandos auxiliares: `/spike` · `/roadmap` · `/workflow` · `/start`
 
-A ordem de prioridade é: **Tier 1 → Tier 2 → Tier 3...** (nunca pular tiers sem motivo).
+### `/discuss` — Análise Pré-Implementação
+Analisa a história com olho crítico → Verifica codebase → Identifica reutilização → Emite veredicto (✅ Pronta / ⚠️ Ajustar / ❌ Repensar)
 
-### 2. Deep Review → `/review`
-Revisão completa da user story **antes** de qualquer código.
-- Detecta inconsistências, edge cases ausentes, ambiguidades
-- Aplica melhorias de baixo risco automaticamente (atualiza o arquivo da história)
-- Emite veredicto: ✅ Ready / ⚠️ Minor corrections / ❌ Blocking issues
+### `/dev-be` — Fase Backend
+Cria branch → Deep Review → Implementa → Testa → Documenta → Commita
 
-**Prompts de review:**
-- Backend: `Allocore-backend/Docs/Prompts/Deep_Review.md`
-- Frontend / Full-Stack: `Allocore-frontend/docs/prompts/Deep_Review.md`
+### `/dev-fe` — Fase Frontend
+Lê contratos BE → Escreve FE story → Deep Review → Implementa → Testa → Documenta → Commita
 
-### 3. Implementação → `/implement`
-Implementa a história **exatamente como especificada**, step by step.
-- Inspeciona o código existente antes de tocar qualquer arquivo
-- Segue os padrões do projeto sem inventar novos
-- Marca cada step como `✅ DONE` na checklist da história conforme conclui
-- Executa build/type-check ao fim de cada step
+### `/ship` — Merge & Release
+Merge para main → Arquiva histórias → Revisa docs → Release notes → Push → Deleta feature branch
 
-**Prompts de implementação:**
-- Backend: `Allocore-backend/Docs/Prompts/Proceed_with_Implementation.md`
-- Frontend / Full-Stack: `Allocore-frontend/docs/prompts/Proceed_with_Implementation.md`
+### `/spike` — Pesquisa & Validação Técnica
+Pesquisa profunda (negócio + técnica) → Script descartável → Testa hipótese → Documenta em `docs/spikes/` → Veredicto (PROCEED/PIVOT/ABORT)
 
-### 4. Documentação → `/document`
-Atualiza o Development History de cada repo tocado pela história.
-- Inspeciona o código implementado (não a story original)
-- Backend: adiciona entrada em `Allocore-backend/Docs/System/DevelopmentHistory.md` (cronológico)
-- Frontend: adiciona entrada em `Allocore-frontend/docs/system/development-history.md` (reverso cronológico)
+### `/roadmap` — Otimização do Roadmap
+Analisa e reordena o roadmap por importância e relevância
+
+Para histórias **backend-only** (sem frontend): `/dev-be` → `/ship`
+
+---
+
+## Convenções Frontend (Allocore)
+
+### File Conventions
+
+| Layer | Location | Pattern |
+|-------|----------|---------|
+| Routes | `src/app/(auth)/` e `src/app/(protected)/` | App Router, route groups |
+| Feature Components | `src/app/components/{feature}/` | Organisms por domínio (auth, companies, providers, contracts) |
+| UI Components | `src/app/components/ui/atoms/` e `molecules/` | Atomic Design |
+| Layout Components | `src/app/components/layout/` | Sidebar, Header |
+| Services | `src/app/services/{feature}Service.ts` | API calls via Axios (`apiClient`) |
+| Types | `src/types/{feature}.ts` | Interfaces, enums, DTOs |
+| Hooks | `src/app/hooks/use{Entity}.ts` | React Query hooks |
+| Context | `src/app/context/{Feature}Context.tsx` | AuthContext |
+| Constants | `src/app/constants/{feature}Schemas.ts` | Zod validation schemas |
+
+### Component Strategy
+
+- **Atomic Design**: Atoms (Button, Input, Badge) → Molecules (FormField, Card) → Organisms (LoginForm, ProviderTable)
+- `'use client'` apenas quando necessário (hooks, state, event handlers)
+- Barrel exports via `index.ts` para UI components
+- Path alias: `@/*` maps to `./src/*`
+
+### API Integration
+
+- `apiClient` (Axios) com interceptor para JWT e 401 redirect
+- React Query para server state (hooks em `src/app/hooks/`)
+- Zod schemas para validação de formulários (React Hook Form + Zod)
+- Error handling: parse error response do backend
+
+### Auth
+
+- `AuthContext` → `useAuth` hook (token, user, login/register/logout)
+- Route groups: `(auth)` para login/register, `(protected)` para rotas autenticadas
+- 401 interceptor redireciona para `/login`
+
+### Design System
+
+- Tailwind CSS 4 (CSS-based config, no `tailwind.config.js`)
+- Icons: Lucide React
+- Toasts: Sonner
+- Forms: React Hook Form + Zod
+- Colors: Primary blue-600, Background gray-50
+- Mobile-first responsive (sm/md/lg/xl breakpoints)
+- Detalhes completos em `docs/design-system.md`
 
 ---
 
@@ -82,11 +129,9 @@ Atualiza o Development History de cada repo tocado pela história.
 | Arquivo | Propósito |
 |---------|-----------|
 | `docs/roadmap.md` | Priorização das próximas histórias |
+| `docs/product-vision.md` | Visão de produto e proposta de valor |
 | `docs/user-stories/future/` | Histórias pendentes de implementação |
 | `docs/user-stories/history/` | Histórias já implementadas (backend/ e frontend/) |
-| `Allocore-backend/Docs/System/SystemArchitecture.md` | Arquitetura do backend |
-| `Allocore-backend/Docs/System/DevelopmentHistory.md` | Histórico de desenvolvimento backend |
-| `Allocore-backend/Docs/System/ProductVision.md` | Visão do produto |
-| `Allocore-frontend/docs/system/project_structure.md` | Estrutura de pastas do frontend |
-| `Allocore-frontend/docs/system/design-system.md` | Design system (cores, componentes, dialogs) |
-| `Allocore-frontend/docs/system/development-history.md` | Histórico de desenvolvimento frontend |
+| `docs/development-history.md` | Histórico de dev unificado (Backend + Frontend) |
+| `docs/design-system.md` | Design system (cores, componentes, responsividade) |
+| `docs/release-notes/` | Release notes unificados (criados pelo /ship) |

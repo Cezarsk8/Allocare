@@ -60,6 +60,7 @@ It is a **focused provider intelligence platform** that sits alongside existing 
 ## Technical Foundation
 
 - **.NET 8** with Clean Architecture (Domain → Application → Infrastructure → API)
+- **Next.js 15** with TypeScript, Tailwind CSS 4, Atomic Design
 - **PostgreSQL** via EF Core
 - **CQRS + MediatR** for command/query separation
 - **FluentValidation** for input validation
@@ -68,4 +69,4 @@ It is a **focused provider intelligence platform** that sits alongside existing 
 
 ---
 
-**Last Updated**: February 28, 2026
+**Last Updated**: March 2026

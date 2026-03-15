@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:allocare-production.up.railway.app)",
+      "WebFetch(domain:allocarefrontend-production.up.railway.app)"
     ]
   }
 }

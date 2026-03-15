@@ -5,7 +5,7 @@ Fase Frontend do desenvolvimento: escreve a FE story, revisa, implementa, testa,
 1. Se $ARGUMENTS for fornecido, use como identificador direto da história (caminho, número ou título).
 2. Caso contrário, detecte a branch atual:
    ```bash
-   cd Allocore-backend && git branch --show-current
+   git branch --show-current
    ```
    - Extraia o identificador da história do nome da branch (ex: `US004-NomeDaStory` → US004).
 3. Localize o arquivo da história em `docs/user-stories/future/`.
@@ -16,21 +16,10 @@ Fase Frontend do desenvolvimento: escreve a FE story, revisa, implementa, testa,
 
 ---
 
-## Passo 2 — Garantir branch no Allocore-frontend
+## Passo 2 — Garantir branch
 
-1. Verifique se a branch `USXXX-NomeDaStory` já existe no `Allocore-frontend/`:
-   ```bash
-   cd Allocore-frontend && git branch --list USXXX-NomeDaStory
-   ```
-2. Se **não existir**, crie-a:
-   ```bash
-   cd Allocore-frontend && git checkout -b USXXX-NomeDaStory
-   ```
-3. Se **já existir**, faça checkout:
-   ```bash
-   cd Allocore-frontend && git checkout USXXX-NomeDaStory
-   ```
-4. Confirme que `Allocore-frontend/` está na branch correta.
+1. Verifique se já está na branch `USXXX-NomeDaStory` (já criada pelo `/dev-be`).
+2. Se não estiver, faça checkout.
 
 ---
 
@@ -41,45 +30,149 @@ Fase Frontend do desenvolvimento: escreve a FE story, revisa, implementa, testa,
    - DTOs: request/response shapes
    - Validações: regras de negócio aplicadas
 2. Leia as referências do frontend:
-   - `Allocore-frontend/docs/system/design-system.md`
-   - `Allocore-frontend/docs/system/project_structure.md`
-   - `Allocore-frontend/docs/system/development-history.md`
+   - `docs/design-system.md`
+   - `docs/development-history.md` (seção Frontend)
+   - Inspecione o codebase diretamente para entender a estrutura e padrões
 
 ---
 
 ## Passo 4 — Escrever a história de frontend
 
-1. Leia o template: `Allocore-frontend/docs/prompts/newUserStory.md`
-2. Inspecione o codebase frontend para entender padrões existentes.
-3. Escreva a história de frontend correspondente seguindo **exatamente** o template.
-4. Salve em `docs/user-stories/future/[USXXX]-[titulo]-Frontend.md`
-5. Apresente a história criada e aguarde confirmação do usuário antes de prosseguir.
+1. Inspecione o codebase frontend para entender padrões existentes.
+2. Escreva a história de frontend correspondente seguindo o template abaixo.
+3. Salve em `docs/user-stories/future/[USXXX]-[titulo]-Frontend.md`
+4. Apresente a história criada e aguarde confirmação do usuário antes de prosseguir.
 
 > Se o usuário rejeitar ou pedir ajustes, aplique e reapresente.
+
+### Template de Frontend Story
+
+```markdown
+# USFWXXX – [Título da Feature] — Frontend
+
+> **Project:** Allocore-frontend
+> **Backend Story:** USXXX
+> **Status:** Pending
+
+**Priority:** [Critical / High / Medium / Low]
+**Dependencies:** [USFWXXX — descrição]
+**Estimated effort:** [1 session / 2 sessions]
+
+## Description
+As a **[role]**, I want [goal] so that [benefit].
+
+## Step 0: Responsive Baseline (MANDATORY)
+- [ ] Define mobile behavior for all components
+
+## Step 1: Types
+- [ ] Create/update types in src/types/
+
+## Step 2: Services
+- [ ] Create API service functions in src/app/services/
+
+## Step 3: Hooks
+- [ ] Create custom hooks in src/app/hooks/
+
+## Step 4: Components
+- [ ] Create atoms, molecules, organisms
+
+## Step 5: Pages
+- [ ] Create route pages
+
+## Step 6: Barrel Exports
+- [ ] Update all index.ts barrel exports
+
+## Acceptance Criteria
+- [ ] npm run type-check passes
+- [ ] npm run build passes
+```
 
 ---
 
 ## Passo 5 — Deep Review Frontend
 
-1. Leia o prompt de review: `Allocore-frontend/docs/prompts/Deep_Review.md`
-2. Inspecione os arquivos relevantes do codebase frontend.
-3. Execute a review completa seguindo o prompt ao pé da letra.
-4. Auto-aplique melhorias de baixo risco diretamente no arquivo da história.
-5. Emita o veredicto:
-   - ✅ Ready → continue para o Passo 6
-   - ⚠️ Minor corrections → aplique e continue para o Passo 6
-   - ❌ Blocking issues → **PARE**. Liste os problemas e aguarde o usuário.
+Execute uma revisão completa da user story de frontend **antes** de implementar.
+
+### Checklist de Review
+
+#### 1. Consistência com Backend
+- [ ] Todos os endpoints referenciados existem no backend implementado?
+- [ ] Os tipos (request/response) correspondem aos DTOs do backend?
+- [ ] As rotas de API estão corretas (method, path, auth)?
+
+#### 2. Consistência com Codebase Frontend
+- [ ] Os imports usam o path alias `@/*`?
+- [ ] Os nomes de arquivos seguem o padrão existente?
+- [ ] Os componentes estão na camada correta (atom/molecule/organism)?
+- [ ] Os barrel exports estão atualizados?
+
+#### 3. Padrões do Projeto
+- [ ] Client components têm `'use client'`?
+- [ ] Server components NÃO têm `'use client'`?
+- [ ] Hooks seguem o padrão `useXxx`?
+- [ ] Services usam Axios via `apiClient`?
+- [ ] Validações usam Zod schemas?
+
+#### 4. UX & Responsividade
+- [ ] A história define comportamento mobile?
+- [ ] Os estados de loading/error/empty estão definidos?
+- [ ] As mensagens de erro são user-friendly?
+- [ ] Os toasts usam Sonner?
+
+#### 5. Edge Cases
+- [ ] Token expirado / não autenticado?
+- [ ] Dados vazios (listas, campos opcionais)?
+- [ ] Erros de validação (frontend + backend)?
+- [ ] Permissões (admin vs user)?
+
+### Veredicto
+
+- ✅ **Ready** — história pode ser implementada como está
+- ⚠️ **Minor corrections** — aplicar correções de baixo risco e continuar
+- ❌ **Blocking issues** — problemas que impedem implementação
 
 ---
 
 ## Passo 6 — Implementação Frontend
 
-1. Leia o prompt: `Allocore-frontend/docs/prompts/Proceed_with_Implementation.md`
-2. Inspecione os arquivos do codebase **antes** de alterar.
-3. Implemente step-by-step na ordem da história:
-   - Types → Services → Hooks → Components → Pages → Tests
-   - Marque cada step como `✅ DONE` no arquivo da história.
-4. Verifique `npm run type-check` + `npm run build` após cada step.
+Implemente a user story de frontend step-by-step, seguindo rigorosamente a ordem definida.
+
+### Regras de Implementação
+
+#### Antes de Tocar Qualquer Arquivo
+1. **Leia** o arquivo existente antes de modificar
+2. **Inspecione** padrões do codebase (imports, naming, structure)
+3. **Verifique** se o arquivo/componente já existe
+
+#### Ordem de Implementação
+1. **Types** — TypeScript interfaces/types em `src/types/`
+2. **Services** — API calls em `src/app/services/`
+3. **Hooks** — Custom hooks em `src/app/hooks/`
+4. **Atoms** — Primitive components em `src/app/components/ui/atoms/`
+5. **Molecules** — Composed components em `src/app/components/ui/molecules/`
+6. **Organisms** — Feature components em `src/app/components/{feature}/`
+7. **Pages** — Route pages em `src/app/(auth)/` ou `src/app/(protected)/`
+8. **Barrel exports** — Atualizar todos os `index.ts`
+
+#### Após Cada Step
+- Marque `✅ DONE` na checklist da história
+- Execute `npm run type-check` para verificar tipos
+- Execute `npm run build` ao fim do último step
+
+#### Padrões Obrigatórios
+- Use `'use client'` apenas quando necessário (hooks, state, event handlers)
+- Use o path alias `@/*` para imports
+- Use Zod para validação de formulários
+- Use React Hook Form para state de formulários
+- Use React Query para server state
+- Use Sonner para toasts (`toast.success()`, `toast.error()`)
+- Use Lucide React para ícones
+
+#### O que NÃO Fazer
+- Não adicione features além do escopo da história
+- Não refatore código que não foi tocado pela história
+- Não adicione dark mode (será feito em história futura)
+- Não pule a verificação de type-check entre steps
 
 ---
 
@@ -99,10 +192,10 @@ cd Allocore-frontend && npm run type-check && npm run build && npm test
 
 ## Passo 8 — Documentação Frontend
 
-1. Execute `git diff --stat` em `Allocore-frontend/` para ver os arquivos alterados.
+1. Execute `git diff --stat` para ver os arquivos alterados.
 2. Inspecione o código **implementado** (não a story).
-3. Adicione uma nova entrada em `Allocore-frontend/docs/system/development-history.md`:
-   - No topo do arquivo (ordem reversa cronológica).
+3. Adicione uma nova entrada na seção **Frontend** de `docs/development-history.md`:
+   - No topo da seção Frontend (ordem reversa cronológica).
    - Incremente a versão minor.
    - Siga o formato existente: Summary, Changes (com ✅), Files Created/Modified, User-Facing Changes, User Story.
 
@@ -110,18 +203,18 @@ cd Allocore-frontend && npm run type-check && npm run build && npm test
 
 ## Passo 9 — Commit
 
-1. Stage e commit no `Allocore-frontend/`:
+1. Stage e commit:
    ```bash
-   cd Allocore-frontend && git add [arquivos relevantes]
+   git add [arquivos relevantes]
    git commit -m "feat: implement USXXX [título] frontend
 
    [descrição breve das mudanças]
 
    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
    ```
-2. Stage e commit a story frontend + story backend atualizada no repo root:
+2. Stage e commit docs:
    ```bash
-   cd .. && git add docs/ && git commit -m "docs: add USXXX frontend story and update status"
+   git add docs/ && git commit -m "docs: add USXXX frontend story and update status"
    ```
 
 ---

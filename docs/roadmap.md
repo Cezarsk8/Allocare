@@ -24,6 +24,8 @@
 ### In Progress / Pending
 | Story | Title | Domain | Dependencies | Status |
 |-------|-------|--------|-------------|--------|
+| US010+011 | Cost Centers & Employees | Cost Allocation | US003 | In Progress |
+| US012 | Employee Service Assignment | Cost Allocation | US010+011, US005 | Pending |
 | US007 | Asset & Inventory Management | Inventory | US003, US011 | Pending |
 | US008 | Payment & Billing Domain | Payments | US004 | Pending |
 | US009 | Email Payment Integration | Email/AI | US008 | Pending |
@@ -52,14 +54,22 @@
 
 > **PM Commentary**: Notes add context to providers and contracts. Important for daily use but not blocking core functionality.
 
-### Tier 4 — Asset & Inventory Management
+### Tier 4 — Employees & Cost Centers
+| Story | Title | Effort | Status |
+|-------|-------|--------|--------|
+| US010+011 | Cost Centers & Employees CRUD | Large | In Progress |
+| US012 | Employee Service Assignment & Cost Allocation | Large | Pending |
+
+> **PM Commentary**: Foundation for cost allocation. CostCenter and Employee entities with full CRUD, then service assignment with per-employee cost calculation. US010+011 must be done before US012.
+
+### Tier 5 — Asset & Inventory Management
 | Story | Title | Effort |
 |-------|-------|--------|
 | US007 | Asset & Inventory Management | Large |
 
 > **PM Commentary**: Physical asset tracking (notebooks, monitors, etc.) with assignment history to employees. Depends on US003 for company scoping and US011 for employee assignments. Independent from the Provider/Contract domain.
 
-### Tier 5 — Payment & Email Integration
+### Tier 6 — Payment & Email Integration
 | Story | Title | Effort |
 |-------|-------|--------|
 | US008 | Payment & Billing Domain | Large |
@@ -77,7 +87,6 @@
 ### Future Tiers (from Product Scaffolding)
 These stories exist as skeletons in the original Roadmap and need to be written as full user stories:
 
-- **EPIC 2**: Employees & Cost Centers (US010, US011)
 - **EPIC 4**: Cost Registration (US030, US031)
 - **EPIC 5**: Cost Allocation (US040–US043)
 - **EPIC 6**: Projects (US050, US051)
@@ -98,10 +107,10 @@ US001 (Scaffolding) ✅
             │    ├── US006 (Notes) ✅
             │    └── US008 (Payments)
             │         └── US009 (Email Integration)
-            ├── US010 (Cost Centers) — skeleton
-            └── US011 (Employees) — skeleton
-                 ├── US007 (Asset & Inventory Management)
-                 └── US030+ (Costs, Allocations, Projects, Reports)
+            ├── US010+011 (Cost Centers & Employees) ← IN PROGRESS
+            │    ├── US012 (Employee Service Assignment)
+            │    ├── US007 (Asset & Inventory Management)
+            │    └── US030+ (Costs, Allocations, Projects, Reports)
 
 FRONTEND:
 USFW001 (Scaffolding) ✅

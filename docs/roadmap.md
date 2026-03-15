@@ -1,6 +1,6 @@
 # Allocare — Roadmap
 
-> Last updated: 2026-03-10
+> Last updated: 2026-03-15
 
 > **Note:** Backend stories use `USXXX` IDs. Frontend stories use `USFWXXX` IDs. Both tracks can progress in parallel once their dependencies are met.
 
@@ -20,11 +20,12 @@
 | USFW003 | Authentication Frontend | Frontend / Authentication |
 | US005 | Provider Contracts | Contracts |
 | US006 | Notes System | Notes |
+| US010+011 | Cost Centers & Employees | Cost Allocation |
+| USFW004 | Cost Centers & Employees Frontend | Frontend / Cost Allocation |
 
 ### In Progress / Pending
 | Story | Title | Domain | Dependencies | Status |
 |-------|-------|--------|-------------|--------|
-| US010+011 | Cost Centers & Employees | Cost Allocation | US003 | In Progress |
 | US012 | Employee Service Assignment | Cost Allocation | US010+011, US005 | Pending |
 | US007 | Asset & Inventory Management | Inventory | US003, US011 | Pending |
 | US008 | Payment & Billing Domain | Payments | US004 | Pending |
@@ -54,13 +55,14 @@
 
 > **PM Commentary**: Notes add context to providers and contracts. Important for daily use but not blocking core functionality.
 
-### Tier 4 — Employees & Cost Centers
+### ~~Tier 4 — Employees & Cost Centers~~ (Partially Complete)
 | Story | Title | Effort | Status |
 |-------|-------|--------|--------|
-| US010+011 | Cost Centers & Employees CRUD | Large | In Progress |
+| US010+011 | Cost Centers & Employees CRUD | Large | ✅ Done |
+| USFW004 | Cost Centers & Employees Frontend | Large | ✅ Done |
 | US012 | Employee Service Assignment & Cost Allocation | Large | Pending |
 
-> **PM Commentary**: Foundation for cost allocation. CostCenter and Employee entities with full CRUD, then service assignment with per-employee cost calculation. US010+011 must be done before US012.
+> **PM Commentary**: Foundation for cost allocation. CostCenter and Employee entities with full CRUD (BE + FE done). Next: US012 for service assignment with per-employee cost calculation.
 
 ### Tier 5 — Asset & Inventory Management
 | Story | Title | Effort |
@@ -107,7 +109,7 @@ US001 (Scaffolding) ✅
             │    ├── US006 (Notes) ✅
             │    └── US008 (Payments)
             │         └── US009 (Email Integration)
-            ├── US010+011 (Cost Centers & Employees) ← IN PROGRESS
+            ├── US010+011 (Cost Centers & Employees) ✅
             │    ├── US012 (Employee Service Assignment)
             │    ├── US007 (Asset & Inventory Management)
             │    └── US030+ (Costs, Allocations, Projects, Reports)
@@ -116,7 +118,8 @@ FRONTEND:
 USFW001 (Scaffolding) ✅
   └── USFW002 (Company Management) ✅
   └── USFW003 (Authentication) ✅
-  └── USFW004+ (Provider UI, Contract UI, Dashboard, etc.)
+  └── USFW004 (Cost Centers & Employees) ✅
+  └── USFW005+ (Provider UI, Contract UI, Dashboard, etc.)
 ```
 
 ---

@@ -33,7 +33,7 @@ public class Employee : Entity
             Email = email.Trim().ToLowerInvariant(),
             CostCenterId = costCenterId,
             JobTitle = jobTitle?.Trim(),
-            HireDate = hireDate,
+            HireDate = NormalizeToUtc(hireDate),
             IsActive = true
         };
     }
@@ -49,15 +49,23 @@ public class Employee : Entity
         Email = email.Trim().ToLowerInvariant();
         CostCenterId = costCenterId;
         JobTitle = jobTitle?.Trim();
-        HireDate = hireDate;
+        HireDate = NormalizeToUtc(hireDate);
         UpdatedAt = DateTime.UtcNow;
     }
 
     public void Terminate(DateTime terminationDate)
     {
-        TerminationDate = terminationDate;
+        TerminationDate = NormalizeToUtc(terminationDate)!.Value;
         IsActive = false;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    private static DateTime? NormalizeToUtc(DateTime? value)
+    {
+        if (value is null) return null;
+        return value.Value.Kind == DateTimeKind.Utc
+            ? value
+            : DateTime.SpecifyKind(value.Value, DateTimeKind.Utc);
     }
 
     public void Reactivate()

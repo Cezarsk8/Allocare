@@ -4,16 +4,15 @@ import { useParams } from 'next/navigation';
 import { useCompany, useCompanyUsers, useRemoveUserFromCompany } from '@/app/hooks/useCompanies';
 import { CompanyForm } from '@/app/components/companies/CompanyForm';
 import { AddUserToCompanyForm } from '@/app/components/companies/AddUserToCompanyForm';
-import { ArrowLeft, Loader2, Pencil, Trash2, UserPlus } from 'lucide-react';
+import { Loader2, Pencil, Trash2, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import Link from 'next/link';
 
 export default function CompanyDetailPage() {
   const params = useParams();
   const companyId = params.id as string;
 
-  const { data: company, isLoading: loadingCompany } = useCompany(companyId);
+  const { data: company } = useCompany(companyId);
   const { data: users, isLoading: loadingUsers } = useCompanyUsers(companyId);
   const removeUser = useRemoveUserFromCompany();
 
@@ -33,55 +32,26 @@ export default function CompanyDetailPage() {
     }
   };
 
-  if (loadingCompany) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-      </div>
-    );
-  }
-
-  if (!company) {
-    return (
-      <div className="mx-auto max-w-4xl px-4 py-8">
-        <div className="rounded-lg border border-gray-200 bg-white p-6 text-center">
-          <p className="text-gray-500">Empresa não encontrada.</p>
-          <Link href="/companies" className="mt-3 inline-block text-sm text-blue-600 hover:underline">
-            Voltar para empresas
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  if (!company) return null;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
-      <Link href="/companies" className="mb-4 inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700">
-        <ArrowLeft className="h-4 w-4" />
-        Voltar
-      </Link>
-
+    <>
       {/* Company Info */}
       <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{company.name}</h1>
-            {company.legalName && <p className="mt-1 text-gray-500">{company.legalName}</p>}
-            {company.taxId && <p className="mt-1 text-sm text-gray-400">CNPJ/Tax ID: {company.taxId}</p>}
-            <div className="mt-3 flex items-center gap-3">
-              <span
-                className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                  company.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
-                }`}
-              >
-                {company.isActive ? 'Ativa' : 'Inativa'}
-              </span>
-              {company.userRole && (
-                <span className="text-xs text-gray-400">
-                  Seu papel: <span className="font-medium text-gray-600">{company.userRole}</span>
-                </span>
-              )}
-            </div>
+            <p className="text-lg font-semibold text-gray-900">Informações da Empresa</p>
+            {company.taxId && (
+              <p className="mt-1 text-sm text-gray-400">
+                CNPJ/Tax ID: {company.taxId}
+              </p>
+            )}
+            {company.userRole && (
+              <p className="mt-2 text-xs text-gray-400">
+                Seu papel:{' '}
+                <span className="font-medium text-gray-600">{company.userRole}</span>
+              </p>
+            )}
           </div>
           {canManage && (
             <button
@@ -186,6 +156,6 @@ export default function CompanyDetailPage() {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
